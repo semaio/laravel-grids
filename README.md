@@ -1,25 +1,9 @@
-Grids
-=====
+laravel-grids
+=============
 
-### `Data Grids Framework for Laravel`
+This package is a fork and improved version of the [Nayjest/Grids](https://github.com/Nayjest/Grids) package.
 
-[![Codacy Badge](https://www.codacy.com/project/badge/4c6955da466a45c1a64972bbfb81fcb7)](https://www.codacy.com/public/mail_2/Grids)
-[![Code Climate](https://codeclimate.com/github/Nayjest/Grids/badges/gpa.svg)](https://codeclimate.com/github/Nayjest/Grids)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Nayjest/Grids/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Nayjest/Grids/?branch=master)
-[![Circle CI](https://circleci.com/gh/Nayjest/Grids/tree/master.svg?style=svg)](https://circleci.com/gh/Nayjest/Grids/tree/master)
-[![Release](https://img.shields.io/packagist/v/nayjest/grids.svg)](https://packagist.org/packages/nayjest/grids)
-[![HHVM Status](http://hhvm.h4cc.de/badge/nayjest/grids.svg)](http://hhvm.h4cc.de/package/nayjest/grids)
-[![Join the chat at https://gitter.im/Nayjest/Grids](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Nayjest/Grids?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-Both Laravel 4 and Laravel 5 are supported.
-
-**Announcement: Further development moved to [view-components/grids](https://github.com/view-components/grids).** view-components/grids package is framework-agnostic, but it's easy to integrate with Laravel using [view-components/eloquent-data-processing](https://github.com/view-components/eloquent-data-processing) package.
-
-- If you need stability, use nayjest/grids
-- If you need more features and flexibility, try view-components/grids
-- Pull-requests from 3rd-party contributors containing new features can be accepted to nayjest/grids just in case when it doesn't break backward compatibility. If you have some radical improvements, please contribute to view-components/grids.
-
-
+### `Data Grids Framework for Laravel 5`
 
 ## Features
 * Data providers (php array, Eloquent model, Doctrine DBAL query object)
@@ -36,87 +20,35 @@ Both Laravel 4 and Laravel 5 are supported.
   - Excel and CSV export
   - _Records per page_ dropdown
   - Show/hide columns UI control
-  - Sorting 
-  - Filtering 
+  - Sorting
+  - Filtering
   - Totals calculation (sum, average value, records count, etc)
   - Pagination
   - etc
 
-## Upcoming Features (moved to view-components/grids)
-* Autodetecting columns based on Eloquent model (if not specified)
-* Builtin output formatters for different column types
-* Working with json data sources via ajax
-* Check compatibility with Lumen microframework
-
-[Ask for more features](https://github.com/Nayjest/Grids/issues). You are welcome!
-
 ## Requirements
 
-* Laravel 4.X / 5.X
-* laravelcollective/html package if you use Laravel5.X
-* php 5.4+
+* PHP 7.1+
+* Laravel 5.7+
+* [laravelcollective/html](https://github.com/LaravelCollective/html) package if you use Laravel5.X
 
 ## Installation
 
 ##### Step 1: Install package using [Composer](https://getcomposer.org)
 
-Add nayjest/grids to "require" section of your composer.json
+Run the following command in the root directory of your project:
 
-```javascript
-"require": {
-    "nayjest/grids": "^1.3.1"
-},
-```
-
-For Laravel 5 you also need to add "laravelcollective/html":
-
-```javascript
-"require": {
-    "nayjest/grids": "^1.3.1",
-    "laravelcollective/html": "^5"
-},
-```
-
-Then install dependencies using following command:
-```bash    
-php composer.phar install
-```
-
-Instead of editing composer.json and executing _composer install_ you can just run following command:
-
-For Laravel 4
-```bash    
-php composer.phar require nayjest/grids
-```
-For Laravel 5
-```bash    
-php composer.phar require nayjest/grids laravelcollective/html
+```bash
+composer.phar require semaio/laravel-grids:^2.0
 ```
 
 ##### Step 2: Laravel Setup
-Add following line to 'providers' section of app/config/app.php file:
-```php
-'Nayjest\Grids\ServiceProvider',
-```
-For Laravel 5 you also need to add "illuminate/html" service provider:
-```php
-'Nayjest\Grids\ServiceProvider',
-'Collective\Html\HtmlServiceProvider',
-```
-
-You may also add facade aliases to your application configuration:
+You may add facade aliases to your application configuration:
 ```php
     'Form'  => 'Collective\Html\FormFacade',
     'HTML'  => 'Collective\Html\HtmlFacade',
     'Grids'     => 'Nayjest\Grids\Grids',
 ```
-## Demo
-
-Demonstration available [here](http://grids-demo.herokuapp.com/demo/example4)
-
-[Code](https://github.com/Nayjest/grids-demo)
-
-
 
 ## Usage
 
@@ -137,8 +69,6 @@ $cfg = [
 echo Grids::make($cfg);
 ```
 
-Results available [here](http://grids-demo.herokuapp.com/demo/example1). For more details see [demo application repository](https://github.com/Nayjest/grids-demo/blob/master/app/Http/Controllers/DemoController.php)
-
 #### Advanced example
 
 If you don't like plain arrays, you can construct grids using object oriented api:
@@ -149,14 +79,13 @@ See example below
 
 ```php
 # Let's take a Eloquent query as data provider
-# Some params may be predefined, other can be controlled using grid components         
+# Some params may be predefined, other can be controlled using grid components
 $query = (new User)
     ->newQuery()
     ->with('posts')
     ->where('role', '=', User::ROLE_AUTHOR);
 
 
-			
 # Instantiate & Configure Grid
 $grid = new Grid(
     (new GridConfig)
@@ -166,7 +95,7 @@ $grid = new Grid(
         # See all supported data providers in sources
         ->setDataProvider(new EloquentDataProvider($query))
         # Setup caching, value in minutes, turned off in debug mode
-        ->setCachingTime(5) 
+        ->setCachingTime(5)
         # Setup table columns
         ->setColumns([
             # simple results numbering, not related to table PK or any obtained data
@@ -175,16 +104,16 @@ $grid = new Grid(
                 ->setName('login')
                 # will be displayed in table header
                 ->setLabel('Login')
-                # That's all what you need for filtering. 
-                # It will create controls, process input 
+                # That's all what you need for filtering.
+                # It will create controls, process input
                 # and filter results (in case of EloquentDataProvider -- modify SQL query)
                 ->addFilter(
                     (new FilterConfig)
                         ->setName('login')
                         ->setOperator(FilterConfig::OPERATOR_LIKE)
                 )
-                # optional, 
-                # use to prettify output in table cell 
+                # optional,
+                # use to prettify output in table cell
                 # or print any data located not in results field matching column name
                 ->setCallback(function ($val, ObjectDataRow $row) {
                     if ($val) {
@@ -256,7 +185,7 @@ $grid = new Grid(
                                     'registration_ip',
                                 ])
                             ,
-                            # Submit button for filters. 
+                            # Submit button for filters.
                             # Place it anywhere in the grid (grid is rendered inside form by default).
                             (new HtmlTag)
                                 ->setTagName('button')
@@ -284,7 +213,7 @@ $grid = new Grid(
                     ])
                 )
                 ->addComponent(
-                    # Renders row containing one cell 
+                    # Renders row containing one cell
                     # with colspan attribute equal to the table columns count
                     (new OneCellRow)
                         # Pagination control
@@ -307,7 +236,7 @@ $grid = new Grid(
 <?= $grid ?>
 # or using blade syntax (Laravel 5)
 {!! $grid !!}
-```        
+```
 
 #### Notes
 * Class names in example code used without namespaces therefore you must import it before
@@ -327,7 +256,7 @@ Quick links:
 
 ##### Working with related Eloquent models
 
-If you need to render data from related Eloquent models, the recommendation is to use joins 
+If you need to render data from related Eloquent models, the recommendation is to use joins
 instead of fetching data from related models becouse in this case filters/sorting will not work.
 Grids sorting and filters changes Laravel query object, but Laravel makes additional queries to get data for related models, so it's impossible to use filters/sorting with related models.
 
@@ -340,7 +269,7 @@ $query = Customer
     ->select('customers.*')
     // Column alias 'country_name' used to avoid naming conflicts, suggest that customers table also has 'name' column.
     ->addSelect('countries.name as country_name')
-...  
+...
 ///   "Country" column config:
 	(new FieldConfig)
 	        /// Grid column displaying country name must be named according to SQl alias: column_name
@@ -348,7 +277,7 @@ $query = Customer
 		->setLabel('Country')
 		// If you use MySQL, grid filters for column_name in this case may not work,
 		// becouse MySQL don't allows to specify column aliases in WHERE SQL section.
-		// To fix filtering for aliased columns, you need to override 
+		// To fix filtering for aliased columns, you need to override
 		// filtering function to use 'countries.name' in SQL instead of 'country_name'
 		->addFilter(
 			(new FilterConfig)
@@ -364,6 +293,12 @@ $query = Customer
 ```
 
 ## Upgrade Guide
+
+### From 1.X to 2.X
+
+* Support for Laravel 4 has been dropped.
+* New requires Laravel 5.7+
+* `Nayjest\Grids\Components\Laravel5\Pager` has been removed, use `Nayjest\Grids\Components\Pager` instead.
 
 ### From 0.9.X to 1.X
 
@@ -398,7 +333,7 @@ Default components hierarchy:
     - TFoot
         - OneCellRow
             - Pager
-        
+
 ```
 For adding child components to default one, resolve it by name and use addComponent / addComponents methods.
 
@@ -422,7 +357,7 @@ Example:
             ->getParent()
         ->getParent()
     ->setColumns([
-...    
+...
 ```
 
 Note that setComponents method rewrites components structure provided by defaults.
@@ -433,16 +368,10 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email mail@vitaliy.in instead of using the issue tracker.
+If you discover any security related issues, please email (see [composer.json](composer.json)) instead of using the issue tracker.
 
 ## License
 
-© 2014&mdash;2017 Vitalii Stepanenko
+© 2014&mdash;2019 Vitalii Stepanenko, Rouven Alexander Rieker
 
-Licensed under the MIT License. 
-
-Please see [License File](LICENSE) for more information.
-
-##
-
-[![Flag Counter](http://s07.flagcounter.com/count/0LAb/bg_FFFFFF/txt_000000/border_FFFFFF/columns_8/maxflags_8/viewers_0/labels_0/pageviews_0/flags_0/percent_1/)](http://info.flagcounter.com/0LAb)
+Licensed under the MIT License. Please see [License File](LICENSE) for more information.
