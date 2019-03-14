@@ -1,6 +1,4 @@
-<?php
-
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 class SelectFilterConfig extends FilterConfig
 {
@@ -13,6 +11,8 @@ class SelectFilterConfig extends FilterConfig
     protected $size = null;
 
     protected $multipleMode = false;
+
+    protected $hideNoneOption = false;
 
     /**
      * Returns option items of html select tag.
@@ -114,5 +114,28 @@ class SelectFilterConfig extends FilterConfig
     public function isMultipleMode()
     {
         return $this->multipleMode;
+    }
+
+    /**
+     * Returns if the "--//--" option with no value is hidden
+     *
+     * @return boolean
+     */
+    public function isNoneOptionHidden()
+    {
+        return $this->hideNoneOption;
+    }
+
+    /**
+     * Enable/disable hiding of the "--//--" option with no value
+     *
+     * @param boolean $hideNoneOption
+     * @return $this
+     */
+    public function setHideNoneOption($hideNoneOption)
+    {
+        $this->hideNoneOption = $hideNoneOption;
+
+        return $this;
     }
 }
