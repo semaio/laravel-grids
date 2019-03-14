@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 use Exception;
 use RuntimeException;
@@ -13,28 +12,35 @@ class ObjectDataRow extends DataRow
      */
     protected function extractCellValue($fieldName)
     {
-
         if (strpos($fieldName, '.') !== false) {
             $parts = explode('.', $fieldName);
+            $parts = array_reverse($parts);
             $res = $this->src;
-            foreach ($parts as $part) {
-                $res = data_get($res, $part);
-                if ($res === null) {
-                    return $res;
+            try {
+                foreach ($parts as $part) {
+                    return is_object($res) ? $res->{$part} : $res[$part];
                 }
+            } catch (Exception $e) {
+                throw new RuntimeException(
+                    "Can't read '$fieldName' as '$part' property from DataRow",
+                    0,
+                    $e
+                );
             }
-            return $res;
+            throw new RuntimeException(
+                "Can't read '$fieldName' property from DataRow",
+                0
+            );
         } else {
             try {
                 return $this->src->{$fieldName};
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 throw new RuntimeException(
                     "Can't read '$fieldName' property from DataRow",
                     0,
                     $e
                 );
             }
-
         }
     }
 }
