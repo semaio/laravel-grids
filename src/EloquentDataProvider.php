@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Event;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class EloquentDataProvider extends DataProvider
 {
@@ -156,6 +157,13 @@ class EloquentDataProvider extends DataProvider
                     break;
                 }
                 $this->src->whereIn($fieldName, $value);
+
+                return $this;
+            case 'ft':
+                $this->src
+                    ->select(DB::raw('*, match(' . $fieldName . ') against (' . DB::connection()->getPdo()->quote($value) . ' in boolean mode) as score'))
+                    ->whereRaw('match(' . $fieldName . ') against (' . DB::connection()->getPdo()->quote($value) . ' in boolean mode)')
+                    ->orderBy('score', 'desc');
 
                 return $this;
         }
