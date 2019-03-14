@@ -28,7 +28,6 @@ This package is a fork and improved version of the [Nayjest/Grids](https://githu
 
 * PHP 7.1+
 * Laravel 5.7+
-* [laravelcollective/html](https://github.com/LaravelCollective/html) package if you use Laravel5.X
 
 ## Installation
 
@@ -45,7 +44,7 @@ You may add facade aliases to your application configuration:
 ```php
     'Form'  => 'Collective\Html\FormFacade',
     'HTML'  => 'Collective\Html\HtmlFacade',
-    'Grids'     => 'Nayjest\Grids\Grids',
+    'Grids' => 'Nayjest\Grids\Grids',
 ```
 
 ## Usage
@@ -58,10 +57,10 @@ In example below grid is configured by php array using [Nayjest/Builder](https:/
 $cfg = [
     'src' => 'App\User',
     'columns' => [
-            'id',
-            'name',
-            'email',
-            'country'
+        'id',
+        'name',
+        'email',
+        'country'
     ]
 ];
 echo Grids::make($cfg);
