@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 use Illuminate\Support\Collection;
 
@@ -36,20 +35,38 @@ class FieldConfig
      */
     protected $is_sortable = false;
 
+    /**
+     * @var string
+     */
     protected $sorting;
 
-    /** @var  Collection|FilterConfig[] */
+    /**
+     * @var Collection|FilterConfig[]
+     */
     protected $filters;
 
-    /** @var  callable */
+    /**
+     * @var callable
+     */
     protected $callback;
 
+    /**
+     * @var bool
+     */
     protected $is_hidden = false;
+
+    /**
+     * HTML Attributes to add to cells
+     * [attributeName => value]
+     *
+     * @var array
+     */
+    protected $cell_html_attributes = [];
 
     /**
      * Constructor.
      *
-     * @param string|null $name column unique name for internal usage
+     * @param string|null $name  column unique name for internal usage
      * @param string|null $label column label
      */
     public function __construct($name = null, $label = null)
@@ -85,6 +102,7 @@ class FieldConfig
     public function setOrder($order)
     {
         $this->order = $order;
+
         return $this;
     }
 
@@ -107,6 +125,7 @@ class FieldConfig
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -128,6 +147,7 @@ class FieldConfig
     public function hide()
     {
         $this->is_hidden = true;
+
         return $this;
     }
 
@@ -139,6 +159,7 @@ class FieldConfig
     public function show()
     {
         $this->is_hidden = false;
+
         return $this;
     }
 
@@ -149,7 +170,7 @@ class FieldConfig
      */
     public function getLabel()
     {
-        return $this->label ? : ucwords(str_replace(array('-', '_', '.'), ' ', $this->name));
+        return $this->label ?: ucwords(str_replace(array('-', '_', '.'), ' ', $this->name));
     }
 
     /**
@@ -161,6 +182,7 @@ class FieldConfig
     public function setLabel($label)
     {
         $this->label = $label;
+
         return $this;
     }
 
@@ -183,6 +205,7 @@ class FieldConfig
     public function setSortable($isSortable)
     {
         $this->is_sortable = $isSortable;
+
         return $this;
     }
 
@@ -206,6 +229,7 @@ class FieldConfig
     public function setSorting($sortOrder)
     {
         $this->sorting = $sortOrder;
+
         return $this;
     }
 
@@ -239,6 +263,7 @@ class FieldConfig
     public function setCallback($callback)
     {
         $this->callback = $callback;
+
         return $this;
     }
 
@@ -279,6 +304,7 @@ class FieldConfig
     {
         $this->getFilters()->push($filter);
         $filter->attach($this);
+
         return $this;
     }
 
@@ -293,6 +319,7 @@ class FieldConfig
     {
         $filter = new $class;
         $this->addFilter($filter);
+
         return $filter;
     }
 
@@ -316,6 +343,7 @@ class FieldConfig
         if (null === $this->filters) {
             $this->filters = new Collection();
         }
+
         return $this->filters;
     }
 
@@ -331,5 +359,24 @@ class FieldConfig
         } else {
             return $row->getCellValue($this);
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getCellHtmlAttributes()
+    {
+        return $this->cell_html_attributes;
+    }
+
+    /**
+     * @param array $cell_html_attributes
+     * @return FieldConfig
+     */
+    public function setCellHtmlAttributes($cell_html_attributes)
+    {
+        $this->cell_html_attributes = $cell_html_attributes;
+
+        return $this;
     }
 }
