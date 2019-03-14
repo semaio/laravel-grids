@@ -1,9 +1,12 @@
 <?php
+
 namespace Nayjest\Grids;
 
 class FilterConfig
 {
     const OPERATOR_LIKE = 'like';
+    const OPERATOR_LIKE_L = 'like_l';
+    const OPERATOR_LIKE_R = 'like_r';
     const OPERATOR_EQ = 'eq';
     const OPERATOR_NOT_EQ = 'n_eq';
     const OPERATOR_GT = 'gt';
@@ -12,8 +15,9 @@ class FilterConfig
     const OPERATOR_GTE = 'gt_e';
     const OPERATOR_IN = 'in';
 
-
-    /** @var  FieldConfig */
+    /**
+     * @var FieldConfig
+     */
     protected $column;
 
     protected $operator = FilterConfig::OPERATOR_EQ;
@@ -26,7 +30,9 @@ class FilterConfig
 
     protected $label;
 
-    /** @var  callable */
+    /**
+     * @var callable
+     */
     protected $filtering_func;
 
     public function getOperator()
@@ -37,6 +43,7 @@ class FilterConfig
     public function setOperator($operator)
     {
         $this->operator = $operator;
+
         return $this;
     }
 
@@ -53,6 +60,7 @@ class FilterConfig
     public function setLabel($label)
     {
         $this->label = $label;
+
         return $this;
     }
 
@@ -71,12 +79,14 @@ class FilterConfig
     public function setFilteringFunc($func)
     {
         $this->filtering_func = $func;
+
         return $this;
     }
 
     public function setTemplate($template)
     {
         $this->template = $template;
+
         return $this;
     }
 
@@ -88,7 +98,6 @@ class FilterConfig
         return $this->template;
     }
 
-
     public function getDefaultValue()
     {
         return $this->default_value;
@@ -97,6 +106,7 @@ class FilterConfig
     public function setDefaultValue($value)
     {
         $this->default_value = $value;
+
         return $this;
     }
 
@@ -105,12 +115,14 @@ class FilterConfig
         if (null === $this->name && $this->column) {
             $this->name = $this->column->getName();
         }
+
         return $this->name;
     }
 
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 

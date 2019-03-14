@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 use DB;
 use Doctrine\DBAL\Query\QueryBuilder;
@@ -19,6 +18,7 @@ class DbalDataProvider extends DataProvider
     /**
      * Set true if Laravel query logging required.
      * Fails when using Connection::PARAM_INT_ARRAY parameters
+     *
      * @var bool
      */
     protected $exec_using_laravel = false;
@@ -39,6 +39,7 @@ class DbalDataProvider extends DataProvider
     public function reset()
     {
         $this->getIterator()->rewind();
+
         return $this;
     }
 
@@ -47,7 +48,6 @@ class DbalDataProvider extends DataProvider
      */
     public function getCollection()
     {
-
         if (!$this->collection) {
             $query = clone $this->src;
             $query
@@ -62,9 +62,9 @@ class DbalDataProvider extends DataProvider
             }
             $this->collection = Collection::make($res);
         }
+
         return $this->collection;
     }
-
 
     public function getPaginator()
     {
@@ -83,11 +83,12 @@ class DbalDataProvider extends DataProvider
                     $this->page_size,
                     $this->getCurrentPage(),
                     [
-                        'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath()
+                        'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath(),
                     ]
                 );
             }
         }
+
         return $this->paginator;
     }
 
@@ -104,6 +105,7 @@ class DbalDataProvider extends DataProvider
         if (!$this->iterator) {
             $this->iterator = $this->getCollection()->getIterator();
         }
+
         return $this->iterator;
     }
 
@@ -123,6 +125,7 @@ class DbalDataProvider extends DataProvider
             $this->iterator->next();
             $row = new ObjectDataRow($item, $this->getRowId());
             Event::fire(self::EVENT_FETCH_ROW, [$row, $this]);
+
             return $row;
         } else {
             return null;
@@ -153,31 +156,38 @@ class DbalDataProvider extends DataProvider
     public function orderBy($fieldName, $direction)
     {
         $this->src->orderBy($fieldName, $direction);
+
         return $this;
     }
 
     public function filter($fieldName, $operator, $value)
     {
-         switch ($operator) {
-            case "eq":
+        switch ($operator) {
+            case 'like_l':
+                $operator = 'like';
+                break;
+            case 'like_r':
+                $operator = 'like';
+                break;
+            case 'eq':
                 $operator = '=';
                 break;
-            case "n_eq":
-                $operator = '<>';    
+            case 'n_eq':
+                $operator = '<>';
                 break;
-            case "gt":
-                $operator = '>';    
-                 break;
-            case "lt":
-                $operator = '<';    
+            case 'gt':
+                $operator = '>';
                 break;
-            case "ls_e":
-                $operator = '<=';    
+            case 'lt':
+                $operator = '<';
                 break;
-            case "gt_e":
-                $operator = '>=';    
+            case 'ls_e':
+                $operator = '<=';
                 break;
-            case "in":
+            case 'gt_e':
+                $operator = '>=';
+                break;
+            case 'in':
                 // may be broken, @see https://github.com/Nayjest/Grids/issues/109
                 $operator = 'IN';
                 if (!is_array($value)) {
@@ -185,9 +195,10 @@ class DbalDataProvider extends DataProvider
                 }
                 break;
         }
-        $parameterName = str_replace(".", "_", $fieldName); // @see https://github.com/Nayjest/Grids/issues/111
+        $parameterName = str_replace('.', '_', $fieldName); // @see https://github.com/Nayjest/Grids/issues/111
         $this->src->andWhere("$fieldName $operator :$parameterName");
         $this->src->setParameter($parameterName, $value);
+
         return $this;
     }
 

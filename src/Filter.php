@@ -1,28 +1,27 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 use View;
 
 class Filter
 {
-    /** @var FilterConfig */
+    /**
+     * @var FilterConfig
+     */
     protected $config;
 
-    /** @var FieldConfig */
+    /**
+     * @var FieldConfig
+     */
     protected $column;
 
     /**
      * Constructor.
      *
      * @param FilterConfig $config
-     * @param FieldConfig $column
-     * @param Grid $grid
+     * @param FieldConfig  $column
+     * @param Grid         $grid
      */
-    public function __construct(
-        FilterConfig $config,
-        FieldConfig $column,
-        Grid $grid
-    )
+    public function __construct(FilterConfig $config, FieldConfig $column, Grid $grid)
     {
         $this->config = $config;
         $this->column = $column;
@@ -38,6 +37,7 @@ class Filter
     {
         $key = $this->grid->getInputProcessor()->getKey();
         $name = $this->config->getId();
+
         return "{$key}[filters][{$name}]";
     }
 
@@ -58,8 +58,7 @@ class Filter
      */
     public function getValue()
     {
-        $from_input = $this
-            ->grid
+        $from_input = $this->grid
             ->getInputProcessor()
             ->getFilterValue($this->config->getId());
         if ($from_input === null) {
@@ -80,6 +79,7 @@ class Filter
         $data['column'] = $this->column;
         $data['filter'] = $this;
         $data['label'] = $this->config->getLabel();
+
         return View::make(
             $this->getTemplate(),
             $data
@@ -95,6 +95,7 @@ class Filter
     {
         $filter_tpl = $this->config->getTemplate();
         $grid_tpl = $this->grid->getConfig()->getTemplate();
+
         return str_replace('*.', "$grid_tpl.filters.", $filter_tpl);
     }
 
@@ -109,12 +110,33 @@ class Filter
         }
         if ($func = $this->config->getFilteringFunc()) {
             $func($value, $this->grid->getConfig()->getDataProvider());
+
             return;
         }
-        $isLike = $this->config->getOperator() === FilterConfig::OPERATOR_LIKE;
-        if ($isLike && strpos($value, '%') === false) {
-            $value = "%$value%";
+        // Add wildcards
+        $operator = $this->config->getOperator();
+        if ($operator === FilterConfig::OPERATOR_LIKE
+            || $operator === FilterConfig::OPERATOR_LIKE_L
+            || $operator === FilterConfig::OPERATOR_LIKE_R
+        ) {
+            $found = false;
+            for ($i = 0; $i < mb_strlen($value); $i++) {
+                if (in_array(mb_substr($value, $i, 1), ['%', '_']) && $i > 0 && mb_substr($value, $i - 1, 1) != '\\') {
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
+                if ($operator === FilterConfig::OPERATOR_LIKE) {
+                    $value = '%' . $value . '%';
+                } elseif ($operator === FilterConfig::OPERATOR_LIKE_L) {
+                    $value = '%' . $value;
+                } elseif ($operator === FilterConfig::OPERATOR_LIKE_R) {
+                    $value .= '%';
+                }
+            }
         }
+        // Filter
         $this->grid->getConfig()->getDataProvider()->filter(
             $this->config->getName(),
             $this->config->getOperator(),

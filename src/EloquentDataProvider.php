@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 use Illuminate\Database\Eloquent\Builder;
 use Event;
@@ -31,6 +30,7 @@ class EloquentDataProvider extends DataProvider
     public function reset()
     {
         $this->getIterator()->rewind();
+
         return $this;
     }
 
@@ -49,6 +49,7 @@ class EloquentDataProvider extends DataProvider
                 );
             }
         }
+
         return $this->collection;
     }
 
@@ -57,6 +58,7 @@ class EloquentDataProvider extends DataProvider
         if (!$this->paginator) {
             $this->paginator = $this->src->paginate($this->page_size);
         }
+
         return $this->paginator;
     }
 
@@ -73,6 +75,7 @@ class EloquentDataProvider extends DataProvider
         if (!$this->iterator) {
             $this->iterator = $this->getCollection()->getIterator();
         }
+
         return $this->iterator;
     }
 
@@ -92,6 +95,7 @@ class EloquentDataProvider extends DataProvider
             $this->iterator->next();
             $row = new EloquentDataRow($item, $this->getRowId());
             Event::fire(self::EVENT_FETCH_ROW, [$row, $this]);
+
             return $row;
         } else {
             return null;
@@ -112,6 +116,7 @@ class EloquentDataProvider extends DataProvider
     public function orderBy($fieldName, $direction)
     {
         $this->src->orderBy($fieldName, $direction);
+
         return $this;
     }
 
@@ -121,33 +126,41 @@ class EloquentDataProvider extends DataProvider
     public function filter($fieldName, $operator, $value)
     {
         switch ($operator) {
-            case "eq":
+            case 'like_l':
+                $operator = 'like';
+                break;
+            case 'like_r':
+                $operator = 'like';
+                break;
+            case 'eq':
                 $operator = '=';
                 break;
-            case "n_eq":
-                $operator = '<>';    
+            case 'n_eq':
+                $operator = '<>';
                 break;
-            case "gt":
-                $operator = '>';    
-                 break;
-            case "lt":
-                $operator = '<';    
+            case 'gt':
+                $operator = '>';
                 break;
-            case "ls_e":
-                $operator = '<=';    
+            case 'lt':
+                $operator = '<';
                 break;
-            case "gt_e":
-                $operator = '>=';    
+            case 'ls_e':
+                $operator = '<=';
                 break;
-            case "in":
+            case 'gt_e':
+                $operator = '>=';
+                break;
+            case 'in':
                 if (!is_array($value)) {
                     $operator = '=';
                     break;
                 }
                 $this->src->whereIn($fieldName, $value);
+
                 return $this;
         }
         $this->src->where($fieldName, $operator, $value);
+
         return $this;
     }
 }
