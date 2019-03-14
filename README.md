@@ -91,8 +91,8 @@ $grid = new Grid(
         ->setName('my_report')
         # See all supported data providers in sources
         ->setDataProvider(new EloquentDataProvider($query))
-        # Setup caching, value in minutes, turned off in debug mode
-        ->setCachingTime(5)
+        # Setup caching, value in seconds, turned off in debug mode
+        ->setCachingTime(300)
         # Setup table columns
         ->setColumns([
             # simple results numbering, not related to table PK or any obtained data

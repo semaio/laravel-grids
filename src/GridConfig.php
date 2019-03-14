@@ -208,15 +208,14 @@ class GridConfig implements RegistryInterface
     }
 
     /**
-     * Sets cache expiration time in minutes.
+     * Sets cache expiration time in seconds.
      *
-     * @param int $minutes
-     *
+     * @param int $seconds
      * @return $this
      */
-    public function setCachingTime($minutes)
+    public function setCachingTime($seconds)
     {
-        $this->cachingTime = $minutes;
+        $this->cachingTime = $seconds;
 
         return $this;
     }
