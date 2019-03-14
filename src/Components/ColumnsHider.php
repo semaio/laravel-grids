@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components;
+<?php namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableComponent;
 
@@ -12,12 +11,11 @@ use Nayjest\Grids\Components\Base\RenderableComponent;
  */
 class ColumnsHider extends RenderableComponent
 {
-
     protected $template = '*.components.columns_hider';
 
     protected $name = 'columns_hider';
 
-    protected $hidden_by_default = [];
+    protected $hiddenByDefault = [];
 
     protected $title = 'Columns';
 
@@ -27,7 +25,8 @@ class ColumnsHider extends RenderableComponent
      */
     public function setHiddenByDefault(array $columnNames)
     {
-        $this->hidden_by_default = $columnNames;
+        $this->hiddenByDefault = $columnNames;
+
         return $this;
     }
 
@@ -36,7 +35,7 @@ class ColumnsHider extends RenderableComponent
      */
     public function getHiddenByDefault()
     {
-        return $this->hidden_by_default;
+        return $this->hiddenByDefault;
     }
 
     /**
@@ -46,19 +45,20 @@ class ColumnsHider extends RenderableComponent
     {
         $key = $this->getId('cookie');
         if (isset($_COOKIE[$key])) {
-            $from_cookie = json_decode($_COOKIE[$key], true);
+            $fromCookie = json_decode($_COOKIE[$key], true);
         } else {
-            $from_cookie = [];
+            $fromCookie = [];
         }
         $res = [];
         foreach ($this->grid->getConfig()->getColumns() as $column) {
             $name = $column->getName();
-            if (isset($from_cookie[$name])) {
-                $res[$name] = (boolean)$from_cookie[$name];
+            if (isset($fromCookie[$name])) {
+                $res[$name] = (boolean)$fromCookie[$name];
             } else {
                 $res[$name] = !in_array($name, $this->getHiddenByDefault());
             }
         }
+
         return $res;
     }
 
@@ -71,8 +71,9 @@ class ColumnsHider extends RenderableComponent
         if ($name) {
             $name = "-$name";
         }
-        $grid_name = $this->grid->getConfig()->getName();
-        return "{$grid_name}-columns_hider{$name}";
+        $gridName = $this->grid->getConfig()->getName();
+
+        return "{$gridName}-columns_hider{$name}";
     }
 
     /**
@@ -90,6 +91,7 @@ class ColumnsHider extends RenderableComponent
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -97,7 +99,7 @@ class ColumnsHider extends RenderableComponent
     {
         parent::prepare();
         $visible = $this->getColumnsVisibility();
-        foreach($this->grid->getConfig()->getColumns() as $column) {
+        foreach ($this->grid->getConfig()->getColumns() as $column) {
             if (!$visible[$column->getName()]) {
                 $column->hide();
             }

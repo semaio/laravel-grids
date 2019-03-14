@@ -1,5 +1,5 @@
-<?php
-namespace Nayjest\Grids\Components;
+<?php namespace Nayjest\Grids\Components;
+
 use Illuminate\Foundation\Application;
 
 /**
@@ -20,14 +20,8 @@ class TFoot extends HtmlTag
      */
     protected function getDefaultComponents()
     {
-        if (version_compare(Application::VERSION, '5', '<')) {
-            $pagerClass = 'Nayjest\Grids\Components\Pager';
-        } else {
-            $pagerClass = 'Nayjest\Grids\Components\Laravel5\Pager';
-        }
         return [
-            (new OneCellRow)
-                ->addComponent(new $pagerClass)
+            (new OneCellRow)->addComponent(new Pager()),
         ];
     }
 }

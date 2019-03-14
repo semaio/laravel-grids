@@ -33,7 +33,7 @@ class FieldConfig
     /**
      * @var bool
      */
-    protected $is_sortable = false;
+    protected $isSortable = false;
 
     /**
      * @var string
@@ -53,7 +53,7 @@ class FieldConfig
     /**
      * @var bool
      */
-    protected $is_hidden = false;
+    protected $isHidden = false;
 
     /**
      * HTML Attributes to add to cells
@@ -61,7 +61,7 @@ class FieldConfig
      *
      * @var array
      */
-    protected $cell_html_attributes = [];
+    protected $cellHtmlAttributes = [];
 
     /**
      * Constructor.
@@ -136,7 +136,7 @@ class FieldConfig
      */
     public function isHidden()
     {
-        return $this->is_hidden;
+        return $this->isHidden;
     }
 
     /**
@@ -146,7 +146,7 @@ class FieldConfig
      */
     public function hide()
     {
-        $this->is_hidden = true;
+        $this->isHidden = true;
 
         return $this;
     }
@@ -158,7 +158,7 @@ class FieldConfig
      */
     public function show()
     {
-        $this->is_hidden = false;
+        $this->isHidden = false;
 
         return $this;
     }
@@ -193,7 +193,7 @@ class FieldConfig
      */
     public function isSortable()
     {
-        return $this->is_sortable;
+        return $this->isSortable;
     }
 
     /**
@@ -204,7 +204,7 @@ class FieldConfig
      */
     public function setSortable($isSortable)
     {
-        $this->is_sortable = $isSortable;
+        $this->isSortable = $isSortable;
 
         return $this;
     }
@@ -366,16 +366,16 @@ class FieldConfig
      */
     public function getCellHtmlAttributes()
     {
-        return $this->cell_html_attributes;
+        return $this->cellHtmlAttributes;
     }
 
     /**
-     * @param array $cell_html_attributes
+     * @param array $cellHtmlAttributes
      * @return FieldConfig
      */
-    public function setCellHtmlAttributes($cell_html_attributes)
+    public function setCellHtmlAttributes($cellHtmlAttributes)
     {
-        $this->cell_html_attributes = $cell_html_attributes;
+        $this->cellHtmlAttributes = $cellHtmlAttributes;
 
         return $this;
     }

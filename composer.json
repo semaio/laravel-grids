@@ -1,45 +1,54 @@
 {
-    "name": "nayjest/grids",
-    "description": "Grids for Laravel 4 & Laravel 5 frameworks",
-    "keywords": [
-        "grid",
-        "tables",
-        "html",
-        "laravel",
-        "database",
-        "eloquent",
-        "bootstrap",
-        "laravel-5",
-        "laravel5"
-    ],
-    "homepage": "https://github.com/Nayjest/Grids",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Vitalii [Nayjest] Stepanenko",
-            "email": "mail@vitaliy.in",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": ">=5.4.0",
-        "illuminate/support": ">=4.2",
-        "nayjest/builder": "~2"
+  "name": "semaio/laravel-grids",
+  "description": "Grid builder for Laravel 5",
+  "keywords": [
+    "grid",
+    "tables",
+    "html",
+    "laravel",
+    "database",
+    "eloquent",
+    "bootstrap",
+    "laravel-5",
+    "laravel5"
+  ],
+  "homepage": "https://github.com/semaio/laravel-grids",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vitalii [Nayjest] Stepanenko",
+      "email": "mail@vitaliy.in",
+      "role": "Developer"
     },
-    "suggest": {
-        "laravelcollective/html": "Required to work with Laravel 5.X",
-        "maatwebsite/excel": "Required to work with Excel export component"
-    },
-    "autoload": {
-        "psr-4": {
-            "Nayjest\\Grids\\": "src/"
-        }
-    },
-    "support": {
-        "email": "mail@vitaliy.in",
-        "source": "https://github.com/Nayjest/Grids",
-        "issues": "https://github.com/Nayjest/Grids/issues"
-    },
-    "minimum-stability": "dev"
+    {
+      "name": "Rouven Alexander Rieker",
+      "email": "therouv@googlemail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/support": ">=4.2",
+    "nayjest/builder": "~2"
+  },
+  "suggest": {
+    "laravelcollective/html": "Required to work with Laravel 5.X",
+    "maatwebsite/excel": "Required to work with Excel export component"
+  },
+  "autoload": {
+    "psr-4": {
+      "Nayjest\\Grids\\": "src/"
+    }
+  },
+  "support": {
+    "source": "https://github.com/semaio/laravel-grids",
+    "issues": "https://github.com/semaio/laravel-grids/issues"
+  },
+  "minimum-stability": "dev",
+  "require-dev": {
+    "phpstan/phpstan": "^0.11.0@dev",
+    "friendsofphp/php-cs-fixer": "^2.15@dev",
+    "squizlabs/php_codesniffer": "^3.0@dev"
+  }
 }

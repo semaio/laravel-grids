@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components;
+<?php namespace Nayjest\Grids\Components;
 
 class SelectFilter extends Filter
 {
@@ -15,6 +14,7 @@ class SelectFilter extends Filter
     public function setVariants(array $variants)
     {
         $this->variants = $variants;
+
         return $this;
     }
 }

@@ -11,7 +11,7 @@ use Nayjest\Grids\FieldConfig;
  */
 class TableCell extends HtmlTag
 {
-    protected $tag_name = 'td';
+    protected $tagName = 'td';
 
     /**
      * @var FieldConfig
@@ -28,6 +28,9 @@ class TableCell extends HtmlTag
         $this->setColumn($column);
     }
 
+    /**
+     * @return array
+     */
     public function getAttributes()
     {
         if (empty($this->attributes['class'])) {
@@ -80,4 +83,3 @@ class TableCell extends HtmlTag
         return $this;
     }
 }
-

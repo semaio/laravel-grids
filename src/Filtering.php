@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 use Illuminate\Support\Collection;
 
@@ -12,9 +11,14 @@ use Illuminate\Support\Collection;
  */
 class Filtering
 {
-    /** @var Grid */
+    /**
+     * @var Grid
+     */
     protected $grid;
 
+    /**
+     * @var
+     */
     protected $filters;
 
     /**
@@ -35,6 +39,7 @@ class Filtering
         if ($this->filters === null) {
             $this->createFilters();
         }
+
         return $this->filters;
     }
 
@@ -89,6 +94,7 @@ class Filtering
         if ($idOrConfig instanceof FilterConfig) {
             $idOrConfig = $idOrConfig->getId();
         }
+
         return $this->getFilters()[$idOrConfig];
     }
 

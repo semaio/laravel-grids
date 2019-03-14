@@ -1,17 +1,18 @@
 <?php
+/**
+ * @var TotalsRow $component
+ */
+
 use Nayjest\Grids\Components\TotalsRow;
-/** @var TotalsRow $component */
+
 ?>
 <tr>
-    <?php foreach($columns as $column): ?>
-        <td
-            class="column-<?= $column->getName() ?>"
-            <?= $column->isHidden()?'style="display:none"':'' ?>
-            >
+    <?php foreach ($columns as $column): ?>
+        <td class="column-<?= $column->getName() ?>" <?= $column->isHidden() ? 'style="display:none"' : '' ?>>
             <?php
             if ($component->uses($column)):
                 $label = '';
-                switch($component->getFieldOperation($column->getName())) {
+                switch ($component->getFieldOperation($column->getName())) {
                     case \Nayjest\Grids\Components\TotalsRow::OPERATION_SUM:
                         $label = '∑';
                         break;

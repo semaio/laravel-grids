@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 class ArrayDataRow extends DataRow
 {
@@ -18,6 +17,7 @@ class ArrayDataRow extends DataRow
                     return $res;
                 }
             }
+
             return $res;
         } else {
             if (array_key_exists($fieldName, $this->src)) {

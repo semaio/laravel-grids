@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components;
+<?php namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableRegistry;
 
@@ -15,5 +14,5 @@ class FiltersRow extends RenderableRegistry
     const NAME = 'filters_row';
     protected $template = '*.components.filters_row';
     protected $name = FiltersRow::NAME;
-    protected $render_section = self::SECTION_END;
+    protected $renderSection = self::SECTION_END;
 }

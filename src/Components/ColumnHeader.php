@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components;
+<?php namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\FieldConfig;
 
@@ -12,7 +11,7 @@ use Nayjest\Grids\FieldConfig;
  */
 class ColumnHeader extends TableCell
 {
-    protected $tag_name = 'th';
+    protected $tagName = 'th';
 
     /**
      * @param FieldConfig $column
@@ -24,6 +23,7 @@ class ColumnHeader extends TableCell
         if ($column->isSortable()) {
             $this->addComponent(new SortingControl($column));
         }
+
         return parent::setColumn($column);
     }
 }

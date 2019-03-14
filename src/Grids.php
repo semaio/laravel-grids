@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 use Nayjest\Builder\Env;
 use Nayjest\Grids\Build\Setup;
@@ -11,8 +10,8 @@ use Nayjest\Grids\Build\Setup;
  *
  * @package Nayjest\Grids
  */
-class Grids {
-
+class Grids
+{
     protected static $builder;
 
     /**
@@ -26,6 +25,7 @@ class Grids {
             $setup = new Setup();
             self::$builder = $setup->run();
         }
+
         return self::$builder;
     }
 
@@ -40,6 +40,7 @@ class Grids {
         $builder = self::getBuilder();
         $configObject = $builder->build($config);
         $grid = new Grid($configObject);
+
         return $grid;
     }
 
@@ -52,6 +53,7 @@ class Grids {
     public static function blueprints()
     {
         self::getBuilder();
+
         return Env::instance()->blueprints();
     }
 }

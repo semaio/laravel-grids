@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components\Base;
+<?php namespace Nayjest\Grids\Components\Base;
 
 /**
  * Class RenderableRegistry
@@ -8,9 +7,7 @@ namespace Nayjest\Grids\Components\Base;
  *
  * @package Nayjest\Grids\Components\Base
  */
-class RenderableRegistry implements
-    RenderableComponentInterface,
-    RegistryInterface
+class RenderableRegistry implements RenderableComponentInterface, RegistryInterface
 {
     use TComponent;
     use TRegistry;
@@ -38,6 +35,7 @@ class RenderableRegistry implements
         foreach ($components as $component) {
             $output .= $component->render();
         }
+
         return $output;
     }
 
@@ -52,7 +50,7 @@ class RenderableRegistry implements
         return $this->getComponents()->filter(
             function (ComponentInterface $component) use ($sectionName) {
                 return $component instanceof RenderableComponentInterface
-                && $component->getRenderSection() === $sectionName;
+                    && $component->getRenderSection() === $sectionName;
             }
         );
     }
@@ -66,8 +64,8 @@ class RenderableRegistry implements
     protected function wrapWithOutsideComponents($output)
     {
         return $this->renderComponents(self::SECTION_BEFORE)
-        . $output
-        . $this->renderComponents(self::SECTION_AFTER);
+            . $output
+            . $this->renderComponents(self::SECTION_AFTER);
     }
 
     /**
@@ -78,8 +76,8 @@ class RenderableRegistry implements
     protected function renderInnerComponents()
     {
         return $this->renderComponents(self::SECTION_BEGIN)
-        . $this->renderComponents()
-        . $this->renderComponents(self::SECTION_END);
+            . $this->renderComponents()
+            . $this->renderComponents(self::SECTION_END);
     }
 
     /**
@@ -89,7 +87,8 @@ class RenderableRegistry implements
      */
     public function render()
     {
-        $this->is_rendered = true;
+        $this->isRendered = true;
+
         return $this->wrapWithOutsideComponents(
             $this->getTemplate()
                 ? $this->renderTemplate()
@@ -97,4 +96,3 @@ class RenderableRegistry implements
         );
     }
 }
-

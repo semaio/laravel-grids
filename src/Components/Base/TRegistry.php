@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components\Base;
+<?php namespace Nayjest\Grids\Components\Base;
 
 use Illuminate\Support\Collection;
 use Nayjest\Grids\Grid;
@@ -30,6 +29,7 @@ trait TRegistry
         if ($this->components === null) {
             $this->setComponents($this->getDefaultComponents());
         }
+
         return $this->components;
     }
 
@@ -65,8 +65,8 @@ trait TRegistry
                     return $res;
                 }
             }
-
         }
+
         return null;
     }
 
@@ -93,6 +93,7 @@ trait TRegistry
     {
         $this->getComponents()->push($component);
         $component->attachTo($this);
+
         return $this;
     }
 
@@ -108,13 +109,14 @@ trait TRegistry
         foreach ($components as $component) {
             $component->attachTo($this);
         }
+
         return $this;
     }
 
     /**
      * Adds set of components to the collection of child components.
      *
-     * @param  Collection|\Illuminate\Support\Contracts\ArrayableInterface|array  $components
+     * @param  Collection|\Illuminate\Support\Contracts\ArrayableInterface|array $components
      * @return $this
      */
     public function addComponents($components)
@@ -122,6 +124,7 @@ trait TRegistry
         $this->setComponents(
             $this->getComponents()->merge($components)
         );
+
         return $this;
     }
 
@@ -136,6 +139,7 @@ trait TRegistry
     {
         $component = new $class;
         $this->addComponent($component);
+
         return $component;
     }
 

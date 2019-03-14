@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 /**
  * @deprecated
@@ -8,4 +7,5 @@ namespace Nayjest\Grids;
  */
 class EloquentDataRow extends ObjectDataRow
 {
+
 }

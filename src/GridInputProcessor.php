@@ -1,9 +1,8 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
-use Input;
-use Request;
-use Form;
+use Collective\Html\FormFacade as Form;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class GridInputProcessor
@@ -80,6 +79,7 @@ class GridInputProcessor
                 $html .= Form::hidden("{$key}[sort][$field]", $direction);
             }
         }
+
         return $html;
     }
 
@@ -92,26 +92,27 @@ class GridInputProcessor
      */
     public function getUniqueRequestId()
     {
-        $cookies_str = '';
+        $cookiesString = '';
         foreach ($_COOKIE as $key => $val) {
             if (strpos($key, $this->getKey()) !== false) {
-                $cookies_str .= $key . json_encode($val);
+                $cookiesString .= $key . json_encode($val);
             }
         }
 
-        return md5($cookies_str . $this->getKey() . json_encode($this->getInput()));
+        return md5($cookiesString . $this->getKey() . json_encode($this->getInput()));
     }
 
     /**
      * @param FieldConfig $column
-     * @param $direction
+     * @param             $direction
      * @return $this
      */
     public function setSorting(FieldConfig $column, $direction)
     {
         $this->input['sort'] = [
-            $column->getName() => $direction
+            $column->getName() => $direction,
         ];
+
         return $this;
     }
 
@@ -134,7 +135,7 @@ class GridInputProcessor
      * Returns value of input parameter related to grid.
      *
      * @param string $key
-     * @param $default
+     * @param        $default
      * @return mixed
      */
     public function getValue($key, $default = null)
@@ -148,53 +149,56 @@ class GridInputProcessor
 
     /**
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      * @return $this
      */
     public function setValue($key, $value)
     {
         $this->input[$key] = $value;
+
         return $this;
     }
 
     /**
      * Returns current query string extended by specified GET parameters.
      *
-     * @param array $new_params
+     * @param array $newParams
      * @return string
      */
-    public function getQueryString(array $new_params = [])
+    public function getQueryString(array $newParams = [])
     {
         $params = $_GET;
         if (!empty($this->input)) {
             $params[$this->getKey()] = $this->input;
         }
-        if (!empty($new_params)) {
+        if (!empty($newParams)) {
             if (empty($params[$this->getKey()])) {
                 $params[$this->getKey()] = [];
             }
-            foreach ($new_params as $key => $value) {
+            foreach ($newParams as $key => $value) {
                 $params[$this->getKey()][$key] = $value;
             }
         }
+
         return http_build_query($params);
     }
 
     /**
      * Returns current URL extended by specified GET parameters.
      *
-     * @param array $new_params
+     * @param array $newParams
      * @return string
      */
-    public function getUrl(array $new_params = [])
+    public function getUrl(array $newParams = [])
     {
-        if (null !== $query_string = $this->getQueryString($new_params)) {
-            $query_string = '?' . $query_string;
+        if (null !== $queryString = $this->getQueryString($newParams)) {
+            $queryString = '?' . $queryString;
         }
         $request = Request::instance();
+
         return $request->getSchemeAndHttpHost()
-        . $request->getBaseUrl()
-        . $request->getPathInfo()
-        . $query_string;
+            . $request->getBaseUrl()
+            . $request->getPathInfo()
+            . $queryString;
     }
 }

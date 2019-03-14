@@ -1,8 +1,8 @@
-<?php
-namespace Nayjest\Grids\Components\Base;
+<?php namespace Nayjest\Grids\Components\Base;
 
 /**
  * Interface TaggableInterface
+ *
  * @deprecated
  * @package Nayjest\Grids\Components\Base
  */

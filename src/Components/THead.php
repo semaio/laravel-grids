@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components;
+<?php namespace Nayjest\Grids\Components;
 
 /**
  * Class THead
@@ -21,7 +20,7 @@ class THead extends HtmlTag
     {
         return [
             new ColumnHeadersRow,
-            new FiltersRow
+            new FiltersRow,
         ];
     }
 }

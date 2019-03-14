@@ -1,18 +1,26 @@
 <?php namespace Nayjest\Grids;
 
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Event;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
 
 class DbalDataProvider extends DataProvider
 {
+    /**
+     * @var
+     */
     protected $collection;
 
+    /**
+     * @var
+     */
     protected $paginator;
 
-    /** @var  $iterator \ArrayIterator */
+    /**
+     * @var \ArrayIterator
+     */
     protected $iterator;
 
     /**
@@ -21,7 +29,7 @@ class DbalDataProvider extends DataProvider
      *
      * @var bool
      */
-    protected $exec_using_laravel = false;
+    protected $execUsingLaravel = false;
 
     /**
      * Constructor.
@@ -52,9 +60,10 @@ class DbalDataProvider extends DataProvider
             $query = clone $this->src;
             $query
                 ->setFirstResult(
-                    ($this->getCurrentPage() - 1) * $this->page_size
+                    ($this->getCurrentPage() - 1) * $this->pageSize
                 )
-                ->setMaxResults($this->page_size);
+                ->setMaxResults($this->pageSize);
+
             if ($this->isExecUsingLaravel()) {
                 $res = DB::select($query, $query->getParameters());
             } else {
@@ -66,27 +75,22 @@ class DbalDataProvider extends DataProvider
         return $this->collection;
     }
 
+    /**
+     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Pagination\Paginator
+     */
     public function getPaginator()
     {
         if (!$this->paginator) {
             $items = $this->getCollection()->toArray();
-            if (version_compare(Application::VERSION, '5.0.0', '<')) {
-                $this->paginator = \Paginator::make(
-                    $items,
-                    $this->getTotalRowsCount(),
-                    $this->page_size
-                );
-            } else {
-                $this->paginator = new \Illuminate\Pagination\LengthAwarePaginator(
-                    $items,
-                    $this->getTotalRowsCount(),
-                    $this->page_size,
-                    $this->getCurrentPage(),
-                    [
-                        'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath(),
-                    ]
-                );
-            }
+            $this->paginator = new \Illuminate\Pagination\LengthAwarePaginator(
+                $items,
+                $this->getTotalRowsCount(),
+                $this->pageSize,
+                $this->getCurrentPage(),
+                [
+                    'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath(),
+                ]
+            );
         }
 
         return $this->paginator;
@@ -100,6 +104,9 @@ class DbalDataProvider extends DataProvider
         return \App::make('paginator');
     }
 
+    /**
+     * @return \ArrayIterator
+     */
     protected function getIterator()
     {
         if (!$this->iterator) {
@@ -117,6 +124,9 @@ class DbalDataProvider extends DataProvider
         return $this->src;
     }
 
+    /**
+     * @return DataRow|ObjectDataRow|null
+     */
     public function getRow()
     {
         if ($this->index < $this->getCurrentPageRowsCount()) {
@@ -132,8 +142,6 @@ class DbalDataProvider extends DataProvider
         }
     }
 
-    protected $_count;
-
     /**
      * @deprecated
      * @return int
@@ -143,16 +151,27 @@ class DbalDataProvider extends DataProvider
         return $this->getCurrentPageRowsCount();
     }
 
+    /**
+     * @return mixed
+     */
     public function getTotalRowsCount()
     {
         return $this->src->execute()->rowCount();
     }
 
+    /**
+     * @return int
+     */
     public function getCurrentPageRowsCount()
     {
         return $this->getCollection()->count();
     }
 
+    /**
+     * @param string $fieldName
+     * @param string $direction
+     * @return $this|DataProvider
+     */
     public function orderBy($fieldName, $direction)
     {
         $this->src->orderBy($fieldName, $direction);
@@ -160,6 +179,12 @@ class DbalDataProvider extends DataProvider
         return $this;
     }
 
+    /**
+     * @param string $fieldName
+     * @param string $operator
+     * @param mixed  $value
+     * @return $this|DataProvider
+     */
     public function filter($fieldName, $operator, $value)
     {
         switch ($operator) {
@@ -207,7 +232,7 @@ class DbalDataProvider extends DataProvider
      */
     public function isExecUsingLaravel()
     {
-        return $this->exec_using_laravel;
+        return $this->execUsingLaravel;
     }
 
     /**
@@ -215,7 +240,6 @@ class DbalDataProvider extends DataProvider
      */
     public function setExecUsingLaravel($execUsingLaravel)
     {
-        $this->exec_using_laravel = $execUsingLaravel;
+        $this->execUsingLaravel = $execUsingLaravel;
     }
-
 }

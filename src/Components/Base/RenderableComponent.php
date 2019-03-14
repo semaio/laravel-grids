@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components\Base;
+<?php namespace Nayjest\Grids\Components\Base;
 
 /**
  * Class RenderableComponent

@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components;
+<?php namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableComponent;
 
@@ -13,14 +12,13 @@ use Nayjest\Grids\Components\Base\RenderableComponent;
  */
 class RecordsPerPage extends RenderableComponent
 {
-
     protected $name = 'records_per_page';
 
     protected $variants = [
         50,
         100,
         300,
-        1000
+        1000,
     ];
 
     protected $template = '*.components.records_per_page';
@@ -32,7 +30,7 @@ class RecordsPerPage extends RenderableComponent
      */
     public function getVariants()
     {
-        return array_combine(array_values($this->variants),array_values($this->variants));
+        return array_combine(array_values($this->variants), array_values($this->variants));
     }
 
     /**
@@ -44,6 +42,7 @@ class RecordsPerPage extends RenderableComponent
     public function setVariants(array $variants)
     {
         $this->variants = $variants;
+
         return $this;
     }
 
@@ -55,6 +54,7 @@ class RecordsPerPage extends RenderableComponent
     public function getInputName()
     {
         $key = $this->grid->getInputProcessor()->getKey();
+
         return "{$key}[filters][records_per_page]";
     }
 
@@ -66,14 +66,11 @@ class RecordsPerPage extends RenderableComponent
      */
     public function getValue()
     {
-        $from_input = $this
-            ->grid
-            ->getInputProcessor()
-            ->getFilterValue('records_per_page');
-        if ($from_input === null) {
+        $input = $this->grid->getInputProcessor()->getFilterValue('records_per_page');
+        if ($input === null) {
             return $this->grid->getConfig()->getPageSize();
         } else {
-            return (int) $from_input;
+            return (int)$input;
         }
     }
 
@@ -83,7 +80,9 @@ class RecordsPerPage extends RenderableComponent
     public function prepare()
     {
         $value = $this->getValue();
-        if (!$value || !is_numeric($value)) return;
+        if (!$value || !is_numeric($value)) {
+            return;
+        }
         $this->grid->getConfig()->getDataProvider()->setPageSize($value);
     }
 }

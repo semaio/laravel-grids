@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components\Base;
+<?php namespace Nayjest\Grids\Components\Base;
 
 trait TComponentView
 {
@@ -7,7 +6,7 @@ trait TComponentView
         TRenderable::getTemplate as private getTemplateInternal;
     }
 
-    protected $render_section;
+    protected $renderSection;
 
     /**
      * Returns variables for usage inside view template.
@@ -16,9 +15,7 @@ trait TComponentView
      */
     protected function getViewData()
     {
-        return $this->grid->getViewData() + [
-            'component' => $this
-        ];
+        return $this->grid->getViewData() + ['component' => $this];
     }
 
     /**
@@ -28,8 +25,9 @@ trait TComponentView
      */
     public function getTemplate()
     {
-        $grid_tpl = $this->grid->getConfig()->getTemplate();
-        return str_replace('*.',"$grid_tpl.", $this->template);
+        $gridTemplate = $this->grid->getConfig()->getTemplate();
+
+        return str_replace('*.', "$gridTemplate.", $this->template);
     }
 
     /**
@@ -40,7 +38,7 @@ trait TComponentView
      */
     public function getRenderSection()
     {
-        return $this->render_section;
+        return $this->renderSection;
     }
 
     /**
@@ -52,7 +50,8 @@ trait TComponentView
      */
     public function setRenderSection($sectionName)
     {
-        $this->render_section = $sectionName;
+        $this->renderSection = $sectionName;
+
         return $this;
     }
 }

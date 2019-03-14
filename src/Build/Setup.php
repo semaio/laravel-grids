@@ -1,8 +1,7 @@
-<?php
-namespace Nayjest\Grids\Build;
+<?php namespace Nayjest\Grids\Build;
 
 use Closure;
-use DB;
+use Illuminate\Support\Facades\DB;
 use LogicException;
 use Nayjest\Builder\Blueprint;
 use Nayjest\Builder\BlueprintsCollection;
@@ -55,8 +54,9 @@ class Setup
             ->add($this->makeFilterBlueprint())
             ->add($this->makeFieldBlueprint())
             ->add($this->makeComponentBlueprint())
-            ->add($config_blueprint = $this->makeConfigBlueprint());
-        return new Builder($config_blueprint);
+            ->add($configBlueprint = $this->makeConfigBlueprint());
+
+        return new Builder($configBlueprint);
     }
 
     /**
@@ -66,48 +66,44 @@ class Setup
      */
     protected function makeConfigBlueprint()
     {
-        $component_blueprint = $this->blueprints->getFor(self::COMPONENT_CLASS);
-        if (!$component_blueprint) {
+        $componentBlueprint = $this->blueprints->getFor(self::COMPONENT_CLASS);
+        if (!$componentBlueprint) {
             throw new LogicException(
                 'Blueprint for grid components must be created before main blueprint.'
             );
         }
 
-        $column_blueprint = $this->blueprints->getFor(self::COLUMN_CLASS);
-        if (!$column_blueprint) {
+        $columnBlueprint = $this->blueprints->getFor(self::COLUMN_CLASS);
+        if (!$columnBlueprint) {
             throw new LogicException(
                 'Blueprint for grid columns must be created before main blueprint.'
             );
         }
 
-        $b = new Blueprint(self::GRID_CLASS, [
+        $blueprint = new Blueprint(self::GRID_CLASS, [
             new BuildDataProvider(),
-            new CustomInstruction(function (Scaffold $s) {
+            new CustomInstruction(function (Scaffold $scaffold) {
                 /** @var EloquentDataProvider $provider */
-                $provider = $s->getInput('data_provider');
-                $is_eloquent = $provider  instanceof EloquentDataProvider;
-
-                if ($is_eloquent && !$s->getInput('columns')) {
+                $provider = $scaffold->getInput('data_provider');
+                $isEloquent = $provider instanceof EloquentDataProvider;
+                if ($isEloquent && !$scaffold->getInput('columns')) {
                     $table = $provider->getBuilder()->getModel()->getTable();
-                    $columns = DB
-                        ::connection()
-                        ->getSchemaBuilder()
-                        ->getColumnListing($table);
-                    $s->input['columns'] = $columns;
-
+                    $columns = DB::connection()->getSchemaBuilder()->getColumnListing($table);
+                    $scaffold->input['columns'] = $columns;
                 }
             }, Instruction::PHASE_PRE_INST),
             new BuildChildren(
                 'components',
-                $component_blueprint
+                $componentBlueprint
             ),
-            new Build('row_component', $component_blueprint),
+            new Build('row_component', $componentBlueprint),
             new BuildChildren(
                 'columns',
-                $column_blueprint
+                $columnBlueprint
             ),
         ]);
-        return $b;
+
+        return $blueprint;
     }
 
     /**
@@ -119,37 +115,36 @@ class Setup
     {
         $blueprint = new Blueprint(self::COMPONENT_CLASS, [
 
-            new CustomInstruction(function (Scaffold $s) {
-                if ($s->input instanceof Closure) {
-                    $s->class = 'Nayjest\Grids\Components\RenderFunc';
-                    $s->constructor_arguments = [$s->input];
-                    $s->input = [];
-                } elseif (is_string($s->input)) {
-                    $s->class = 'Nayjest\Grids\Components\RenderFunc';
-                    $out = $s->input;
-                    $s->constructor_arguments = [function () use ($out) {
+            new CustomInstruction(function (Scaffold $scaffold) {
+                if ($scaffold->input instanceof Closure) {
+                    $scaffold->class = 'Nayjest\Grids\Components\RenderFunc';
+                    $scaffold->constructorArguments = [$scaffold->input];
+                    $scaffold->input = [];
+                } elseif (is_string($scaffold->input)) {
+                    $scaffold->class = 'Nayjest\Grids\Components\RenderFunc';
+                    $out = $scaffold->input;
+                    $scaffold->constructorArguments = [function () use ($out) {
                         return $out;
                     }];
-                    $s->input = [];
+                    $scaffold->input = [];
                 }
             }, Instruction::PHASE_PRE_INST),
-            new CustomMapping('type', function ($type, Scaffold $s) {
+            new CustomMapping('type', function ($type, Scaffold $scaffold) {
                 if (strpos($type, '\\') !== false) {
-                    $s->class = $type;
+                    $scaffold->class = $type;
                 } else {
-                    $s->class = 'Nayjest\Grids\Components\\' . str_replace(
-                            ' ',
-                            '',
-                            ucwords(str_replace(array('-', '_'), ' ', $type))
-                        );
+                    $scaffold->class = 'Nayjest\Grids\Components\\' . str_replace(
+                        ' ',
+                        '',
+                        ucwords(str_replace(array('-', '_'), ' ', $type))
+                    );
                 }
-            }, null, Instruction::PHASE_PRE_INST)
+            }, null, Instruction::PHASE_PRE_INST),
         ]);
         $blueprint->add(new BuildChildren('components', $blueprint));
-
         $blueprint->add(new Rename('component', 'add_component'));
         $blueprint->add(new Build('add_component', $blueprint));
-        $blueprint->add(new CallMethodWith('add_component','addComponent'));
+        $blueprint->add(new CallMethodWith('add_component', 'addComponent'));
 
         return $blueprint;
     }
@@ -163,17 +158,17 @@ class Setup
     {
         return new Blueprint(self::FILTER_CLASS, [
             new SimpleValueAsField('name'),
-            new CustomMapping('type', function ($type, Scaffold $s) {
-                switch($type) {
+            new CustomMapping('type', function ($type, Scaffold $scaffold) {
+                switch ($type) {
                     case 'select':
-                        $s->class = 'Nayjest\Grids\SelectFilterConfig';
+                        $scaffold->class = 'Nayjest\Grids\SelectFilterConfig';
                         break;
                     default:
                         break;
                 }
             }, null, Instruction::PHASE_PRE_INST),
-            new Rename(0,'name'),
-            new Rename(1,'operator'),
+            new Rename(0, 'name'),
+            new Rename(1, 'operator'),
         ]);
     }
 
@@ -184,20 +179,20 @@ class Setup
      */
     protected function makeFieldBlueprint()
     {
-        $filter_blueprint = $this->blueprints->getFor(self::FILTER_CLASS);
-        if (!$filter_blueprint) {
+        $filterBlueprint = $this->blueprints->getFor(self::FILTER_CLASS);
+        if (!$filterBlueprint) {
             throw new LogicException(
                 'Blueprint for grid filters must be created before grid columns blueprint.'
             );
         }
+
         return new Blueprint(self::COLUMN_CLASS, [
             new SimpleValueAsField('name'),
-            new Rename(0,'name'),
-            new BuildChildren('filters', $filter_blueprint),
-
+            new Rename(0, 'name'),
+            new BuildChildren('filters', $filterBlueprint),
             new Rename('filter', 'add_filter'),
-            new Build('add_filter', $filter_blueprint),
-            new CallMethodWith('add_filter','addFilter'),
+            new Build('add_filter', $filterBlueprint),
+            new CallMethodWith('add_filter', 'addFilter'),
         ]);
     }
 }

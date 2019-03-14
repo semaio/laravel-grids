@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 /**
  * Class IdFieldConfig
@@ -10,7 +9,6 @@ namespace Nayjest\Grids;
  */
 class IdFieldConfig extends FieldConfig
 {
-
     /**
      * Constructor.
      */

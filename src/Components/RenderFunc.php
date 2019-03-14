@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components;
+<?php namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableComponent;
 
@@ -12,8 +11,9 @@ use Nayjest\Grids\Components\Base\RenderableComponent;
  */
 class RenderFunc extends RenderableComponent
 {
-
-    /** @var  callable */
+    /**
+     * @var callable
+     */
     protected $func;
 
     /**
@@ -21,7 +21,9 @@ class RenderFunc extends RenderableComponent
      */
     public function __construct($func = null)
     {
-        if ($func) $this->setFunc($func);
+        if ($func) {
+            $this->setFunc($func);
+        }
     }
 
     /**

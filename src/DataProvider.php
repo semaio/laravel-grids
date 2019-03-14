@@ -1,8 +1,8 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 /**
  * Class DataProvider
+ *
  * @package Nayjest\Grids
  */
 abstract class DataProvider
@@ -13,9 +13,9 @@ abstract class DataProvider
 
     protected $index = 0;
 
-    protected $page_size = 100;
+    protected $pageSize = 100;
 
-    protected $current_page = 1;
+    protected $currentPage = 1;
 
     /**
      * Constructor.
@@ -35,6 +35,7 @@ abstract class DataProvider
     public function reset()
     {
         reset($this->src);
+
         return $this;
     }
 
@@ -46,7 +47,8 @@ abstract class DataProvider
      */
     public function setPageSize($pageSize)
     {
-        $this->page_size = $pageSize;
+        $this->pageSize = $pageSize;
+
         return $this;
     }
 
@@ -57,7 +59,7 @@ abstract class DataProvider
      */
     public function setCurrentPage($currentPage)
     {
-        $this->current_page = $currentPage;
+        $this->currentPage = $currentPage;
     }
 
     /**
@@ -67,7 +69,7 @@ abstract class DataProvider
      */
     public function getCurrentPage()
     {
-        return $this->current_page;
+        return $this->currentPage;
     }
 
     /**
@@ -75,7 +77,8 @@ abstract class DataProvider
      */
     protected function getRowId()
     {
-        $offset = ($this->getCurrentPage() - 1) * $this->page_size;
+        $offset = ($this->getCurrentPage() - 1) * $this->pageSize;
+
         return $offset + $this->index;
     }
 
@@ -83,7 +86,7 @@ abstract class DataProvider
      * Sets data sorting.
      *
      * @param string $fieldName
-     * @param $direction
+     * @param        $direction
      * @return $this
      */
     abstract public function orderBy($fieldName, $direction);
@@ -93,7 +96,7 @@ abstract class DataProvider
      *
      * @param string $fieldName
      * @param string $operator
-     * @param mixed $value
+     * @param mixed  $value
      * @return $this
      */
     abstract public function filter($fieldName, $operator, $value);

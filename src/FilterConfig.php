@@ -1,6 +1,4 @@
-<?php
-
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 class FilterConfig
 {
@@ -24,7 +22,7 @@ class FilterConfig
 
     protected $template = '*.input';
 
-    protected $default_value;
+    protected $defaultValue;
 
     protected $name;
 
@@ -33,7 +31,7 @@ class FilterConfig
     /**
      * @var callable
      */
-    protected $filtering_func;
+    protected $filteringFunc;
 
     public function getOperator()
     {
@@ -69,7 +67,7 @@ class FilterConfig
      */
     public function getFilteringFunc()
     {
-        return $this->filtering_func;
+        return $this->filteringFunc;
     }
 
     /**
@@ -78,7 +76,7 @@ class FilterConfig
      */
     public function setFilteringFunc($func)
     {
-        $this->filtering_func = $func;
+        $this->filteringFunc = $func;
 
         return $this;
     }
@@ -100,12 +98,12 @@ class FilterConfig
 
     public function getDefaultValue()
     {
-        return $this->default_value;
+        return $this->defaultValue;
     }
 
     public function setDefaultValue($value)
     {
-        $this->default_value = $value;
+        $this->defaultValue = $value;
 
         return $this;
     }

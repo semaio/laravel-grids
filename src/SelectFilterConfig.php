@@ -6,7 +6,7 @@ class SelectFilterConfig extends FilterConfig
 
     protected $options = [];
 
-    protected $is_submitted_on_change = false;
+    protected $isSubmittedOnChange = false;
 
     protected $size = null;
 
@@ -46,7 +46,7 @@ class SelectFilterConfig extends FilterConfig
      */
     public function isSubmittedOnChange()
     {
-        return $this->is_submitted_on_change;
+        return $this->isSubmittedOnChange;
     }
 
     /**
@@ -58,7 +58,7 @@ class SelectFilterConfig extends FilterConfig
      */
     public function setSubmittedOnChange($isSubmittedOnChange)
     {
-        $this->is_submitted_on_change = $isSubmittedOnChange;
+        $this->isSubmittedOnChange = $isSubmittedOnChange;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <?php namespace Nayjest\Grids;
 
-use View;
+use Illuminate\Support\Facades\View;
 
 class Filter
 {
@@ -58,13 +58,11 @@ class Filter
      */
     public function getValue()
     {
-        $from_input = $this->grid
-            ->getInputProcessor()
-            ->getFilterValue($this->config->getId());
-        if ($from_input === null) {
+        $input = $this->grid->getInputProcessor()->getFilterValue($this->config->getId());
+        if ($input === null) {
             return $this->config->getDefaultValue();
         } else {
-            return $from_input;
+            return $input;
         }
     }
 
@@ -93,10 +91,10 @@ class Filter
      */
     protected function getTemplate()
     {
-        $filter_tpl = $this->config->getTemplate();
-        $grid_tpl = $this->grid->getConfig()->getTemplate();
+        $filterTemplate = $this->config->getTemplate();
+        $gridTemplate = $this->grid->getConfig()->getTemplate();
 
-        return str_replace('*.', "$grid_tpl.filters.", $filter_tpl);
+        return str_replace('*.', "$gridTemplate.filters.", $filterTemplate);
     }
 
     /**

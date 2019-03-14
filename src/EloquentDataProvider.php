@@ -1,18 +1,26 @@
 <?php namespace Nayjest\Grids;
 
 use Illuminate\Database\Eloquent\Builder;
-use Event;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class EloquentDataProvider extends DataProvider
 {
+    /**
+     * @var
+     */
     protected $collection;
 
+    /**
+     * @var
+     */
     protected $paginator;
 
-    /** @var  $iterator \ArrayIterator */
+    /**
+     * @var \ArrayIterator
+     */
     protected $iterator;
 
     /**
@@ -42,22 +50,21 @@ class EloquentDataProvider extends DataProvider
     {
         if (!$this->collection) {
             $paginator = $this->getPaginator();
-            if (version_compare(Application::VERSION, '5', '<')) {
-                $this->collection = $paginator->getCollection();
-            } else {
-                $this->collection = Collection::make(
-                    $this->getPaginator()->items()
-                );
-            }
+            $this->collection = Collection::make(
+                $this->getPaginator()->items()
+            );
         }
 
         return $this->collection;
     }
 
+    /**
+     * @return \Illuminate\Pagination\Paginator
+     */
     public function getPaginator()
     {
         if (!$this->paginator) {
-            $this->paginator = $this->src->paginate($this->page_size);
+            $this->paginator = $this->src->paginate($this->pageSize);
         }
 
         return $this->paginator;
@@ -71,6 +78,9 @@ class EloquentDataProvider extends DataProvider
         return $this->src->getQuery()->getConnection()->getPaginator();
     }
 
+    /**
+     * @return \ArrayIterator
+     */
     protected function getIterator()
     {
         if (!$this->iterator) {
@@ -88,6 +98,9 @@ class EloquentDataProvider extends DataProvider
         return $this->src;
     }
 
+    /**
+     * @return DataRow|EloquentDataRow|null
+     */
     public function getRow()
     {
         if ($this->index < $this->count()) {
@@ -160,10 +173,12 @@ class EloquentDataProvider extends DataProvider
 
                 return $this;
             case 'ft':
+                // @codingStandardsIgnoreStart
                 $this->src
                     ->select(DB::raw('*, match(' . $fieldName . ') against (' . DB::connection()->getPdo()->quote($value) . ' in boolean mode) as score'))
                     ->whereRaw('match(' . $fieldName . ') against (' . DB::connection()->getPdo()->quote($value) . ' in boolean mode)')
                     ->orderBy('score', 'desc');
+                // @codingStandardsIgnoreEnd
 
                 return $this;
         }

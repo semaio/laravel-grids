@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components\Base;
+<?php namespace Nayjest\Grids\Components\Base;
 
 use Nayjest\Grids\Grid;
 
@@ -8,20 +7,26 @@ use Nayjest\Grids\Grid;
  *
  * ComponentInterface interface implementation.
  *
- * @see Nayjest\Grids\Components\Base\ComponentInterface
- *
+ * @see     Nayjest\Grids\Components\Base\ComponentInterface
  * @package Nayjest\Grids\Components\Base
  */
 trait TComponent
 {
     use TTaggable;
 
+    /**
+     * @var RegistryInterface
+     */
     protected $parent;
 
-    /** @var Grid */
+    /**
+     * @var Grid
+     */
     protected $grid;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     protected $name;
 
     /**
@@ -78,6 +83,7 @@ trait TComponent
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 

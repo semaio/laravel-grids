@@ -1,17 +1,23 @@
-<?php
-namespace Nayjest\Grids\Components;
+<?php namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableRegistry;
 
 class HtmlTag extends RenderableRegistry
 {
-    protected $tag_name;
+    /**
+     * @var string
+     */
+    protected $tagName;
 
+    /**
+     * @var string
+     */
     protected $content;
 
     /**
      * HTML tag attributes.
      * Keys are attribute names and values are attribute values.
+     *
      * @var array
      */
     protected $attributes = [];
@@ -35,7 +41,8 @@ class HtmlTag extends RenderableRegistry
      */
     public function setTagName($name)
     {
-        $this->tag_name = $name;
+        $this->tagName = $name;
+
         return $this;
     }
 
@@ -46,7 +53,7 @@ class HtmlTag extends RenderableRegistry
      */
     public function getTagName()
     {
-        return $this->tag_name ?: $this->suggestTagName();
+        return $this->tagName ?: $this->suggestTagName();
     }
 
     /**
@@ -56,10 +63,11 @@ class HtmlTag extends RenderableRegistry
      */
     private function suggestTagName()
     {
-        $class_name = get_class($this);
-        $parts = explode('\\', $class_name);
-        $base_name = array_pop($parts);
-        return ($base_name === 'HtmlTag') ? 'div' : strtolower($base_name);
+        $className = get_class($this);
+        $parts = explode('\\', $className);
+        $baseName = array_pop($parts);
+
+        return ($baseName === 'HtmlTag') ? 'div' : strtolower($baseName);
     }
 
     /**
@@ -71,6 +79,7 @@ class HtmlTag extends RenderableRegistry
     public function setContent($content)
     {
         $this->content = $content;
+
         return $this;
     }
 
@@ -94,6 +103,7 @@ class HtmlTag extends RenderableRegistry
     public function setAttributes(array $attributes = [])
     {
         $this->attributes = $attributes;
+
         return $this;
     }
 
@@ -117,10 +127,11 @@ class HtmlTag extends RenderableRegistry
     {
         /** @var \Collective\Html\HtmlBuilder $html */
         $html = app('html');
+
         return '<'
-        . $this->getTagName()
-        . $html->attributes($this->getAttributes())
-        . '>';
+            . $this->getTagName()
+            . $html->attributes($this->getAttributes())
+            . '>';
     }
 
     /**
@@ -141,7 +152,7 @@ class HtmlTag extends RenderableRegistry
         if ($this->getTemplate()) {
             $inner = $this->renderTemplate();
         } else {
-            $this->is_rendered = true;
+            $this->isRendered = true;
             $inner = $this->renderOpeningTag()
                 . $this->renderComponents(self::SECTION_BEGIN)
                 . $this->getContent()
@@ -149,7 +160,7 @@ class HtmlTag extends RenderableRegistry
                 . $this->renderComponents(self::SECTION_END)
                 . $this->renderClosingTag();
         }
+
         return $this->wrapWithOutsideComponents($inner);
     }
 }
-

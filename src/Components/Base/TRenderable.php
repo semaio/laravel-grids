@@ -1,29 +1,28 @@
-<?php
-namespace Nayjest\Grids\Components\Base;
+<?php namespace Nayjest\Grids\Components\Base;
 
-use View;
+use Illuminate\Support\Facades\View;
 
 /**
  * Trait TRenderable
  *
  * Default implementation of rendering facilities for grid component, etc.
  *
- * @todo Avoid usage of Laravel Facade aliases (?)
- * @todo Absence of getViewData isn't convenient (?)
+ * @todo    Avoid usage of Laravel Facade aliases (?)
+ * @todo    Absence of getViewData isn't convenient (?)
  *
  * @package Nayjest\Grids\Components\Base
  */
 trait TRenderable
 {
     /**
-     * Name of view template.
-     *
-     * @var  string
+     * @var string Name of view template.
      */
     protected $template;
 
-    /** @var bool */
-    protected $is_rendered = false;
+    /**
+     * @var bool
+     */
+    protected $isRendered = false;
 
     /**
      * Renders object.
@@ -32,11 +31,9 @@ trait TRenderable
      */
     public function render()
     {
-        $this->is_rendered = true;
-        return View::make(
-            $this->getTemplate(),
-            $this->getViewData()
-        )->render();
+        $this->isRendered = true;
+
+        return View::make($this->getTemplate(), $this->getViewData())->render();
     }
 
     /**
@@ -58,6 +55,7 @@ trait TRenderable
     public function setTemplate($template)
     {
         $this->template = $template;
+
         return $this;
     }
 
@@ -68,7 +66,7 @@ trait TRenderable
      */
     public function isRendered()
     {
-        return $this->is_rendered;
+        return $this->isRendered;
     }
 
     /**

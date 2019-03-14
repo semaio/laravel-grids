@@ -1,15 +1,17 @@
 <?php
-/** @var Nayjest\Grids\Filter $filter */
-/** @var Nayjest\Grids\SelectFilterConfig $cfg */
+/**
+ * @var Nayjest\Grids\Filter $filter
+ */
+/**
+ * @var Nayjest\Grids\SelectFilterConfig $cfg
+ */
 $cfg = $filter->getConfig();
 $onchange = '';
 if (method_exists($cfg, 'isSubmittedOnChange') && $cfg->isSubmittedOnChange()) {
     $onchange = 'onchange="this.form.submit()"';
 }
 ?>
-<select
-        class="form-control input-sm"
-        name="<?= $filter->getInputName() ?><?= $cfg->isMultipleMode() ? '[]' : '' ?>"
+<select class="form-control input-sm" name="<?= $filter->getInputName() ?><?= $cfg->isMultipleMode() ? '[]' : '' ?>"
     <?= $onchange ?>
     <?= ($size = $cfg->getSize()) ? 'size="' . $size . '"' : '' ?>
     <?= ($cfg->isMultipleMode()) ? 'multiple="multiple"' : '' ?>

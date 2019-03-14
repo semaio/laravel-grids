@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components\Base;
+<?php namespace Nayjest\Grids\Components\Base;
 
 /**
  * Interface RenderableComponentInterface
@@ -8,9 +7,7 @@ namespace Nayjest\Grids\Components\Base;
  *
  * @package Nayjest\Grids\Components\Base
  */
-interface RenderableComponentInterface extends
-    RenderableInterface,
-    ComponentInterface
+interface RenderableComponentInterface extends RenderableInterface, ComponentInterface
 {
     /**
      * Returns section (named placeholder in parent object markup)

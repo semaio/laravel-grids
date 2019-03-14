@@ -1,8 +1,6 @@
-<?php
+<?php namespace Nayjest\Grids\Components;
 
-namespace Nayjest\Grids\Components;
-
-use Event;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Response;
@@ -17,7 +15,7 @@ use Nayjest\Grids\Grid;
  *
  * The component provides control for exporting data to CSV.
  *
- * @author: Vitaliy Ofat <i@vitaliy-ofat.com>
+ * @author  Vitaliy Ofat <i@vitaliy-ofat.com>
  * @package Nayjest\Grids\Components
  */
 class CsvExport extends RenderableComponent
@@ -30,8 +28,8 @@ class CsvExport extends RenderableComponent
 
     protected $template = '*.components.csv_export';
     protected $name = CsvExport::NAME;
-    protected $render_section = RenderableRegistry::SECTION_END;
-    protected $rows_limit = self::DEFAULT_ROWS_LIMIT;
+    protected $renderSection = RenderableRegistry::SECTION_END;
+    protected $rowsLimit = self::DEFAULT_ROWS_LIMIT;
 
     /**
      * @var string
@@ -67,6 +65,7 @@ class CsvExport extends RenderableComponent
     public function setFileName($name)
     {
         $this->fileName = $name;
+
         return $this;
     }
 
@@ -83,7 +82,7 @@ class CsvExport extends RenderableComponent
      */
     public function getRowsLimit()
     {
-        return $this->rows_limit;
+        return $this->rowsLimit;
     }
 
     /**
@@ -93,7 +92,8 @@ class CsvExport extends RenderableComponent
      */
     public function setRowsLimit($limit)
     {
-        $this->rows_limit = $limit;
+        $this->rowsLimit = $limit;
+
         return $this;
     }
 
@@ -122,7 +122,7 @@ class CsvExport extends RenderableComponent
         $file = fopen('php://output', 'w');
 
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="'. $this->getFileName() .'"');
+        header('Content-Disposition: attachment; filename="' . $this->getFileName() . '"');
         header('Pragma: no-cache');
 
         set_time_limit(0);
@@ -139,11 +139,10 @@ class CsvExport extends RenderableComponent
             $output = [];
             foreach ($this->grid->getConfig()->getColumns() as $column) {
                 if (!$column->isHidden()) {
-                    $output[] = $this->escapeString( $column->getValue($row) );
+                    $output[] = $this->escapeString($column->getValue($row));
                 }
             }
             fputcsv($file, $output, static::CSV_DELIMITER);
-
         }
 
         fclose($file);
@@ -161,6 +160,7 @@ class CsvExport extends RenderableComponent
         $str = str_replace('"', '\'', $str);
         $str = preg_replace('/\s+/', ' ', $str); # remove double spaces
         $str = trim($str);
+
         return $str;
     }
 

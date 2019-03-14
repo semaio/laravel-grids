@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components;
+<?php namespace Nayjest\Grids\Components;
 
 use LogicException;
 use Nayjest\Grids\Components\Base\RenderableComponentInterface;
@@ -33,14 +32,16 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
     //const OPERATION_MAX = 'max';
     //const OPERATION_MIN = 'min';
 
-    /** @var \Illuminate\Support\Collection|FieldConfig[] */
+    /**
+     * @var \Illuminate\Support\Collection|FieldConfig[]
+     */
     protected $fields;
 
-    protected $field_names;
+    protected $fieldNames;
 
-    protected $field_operations = [];
+    protected $fieldOperations = [];
 
-    protected $rows_processed = 0;
+    protected $rowsProcessed = 0;
 
     /**
      * Constructor.
@@ -57,10 +58,10 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
 
     protected function provideFields()
     {
-        $field_names = $this->field_names;
+        $fieldNames = $this->fieldNames;
         $this->fields = $this->grid->getConfig()->getColumns()->filter(
-            function (FieldConfig $field) use ($field_names) {
-                return in_array($field->getName(), $field_names);
+            function (FieldConfig $field) use ($fieldNames) {
+                return in_array($field->getName(), $fieldNames);
             }
         );
     }
@@ -77,18 +78,19 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
         Event::listen(
             DataProvider::EVENT_FETCH_ROW,
             function (DataRow $row, DataProvider $currentProvider) use ($provider) {
-                if ($currentProvider !== $provider) return;
-                $this->rows_processed++;
+                if ($currentProvider !== $provider) {
+                    return;
+                }
+                $this->rowsProcessed++;
                 foreach ($this->fields as $field) {
                     $name = $field->getName();
                     $operation = $this->getFieldOperation($name);
-                    switch($operation) {
-
+                    switch ($operation) {
                         case self::OPERATION_SUM:
                             $this->src[$name] += $row->getCellValue($field);
                             break;
                         case self::OPERATION_COUNT:
-                            $this->src[$name] = $this->rows_processed;
+                            $this->src[$name] = $this->rowsProcessed;
                             break;
                         case self::OPERATION_AVG:
                             $key = "{$name}_sum";
@@ -97,7 +99,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
                             }
                             $this->src[$key] += $row->getCellValue($field);
                             $this->src[$name] = round(
-                                $this->src[$key] / $this->rows_processed,
+                                $this->src[$key] / $this->rowsProcessed,
                                 2
                             );
                             break;
@@ -106,9 +108,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
                                 'TotalsRow: Unknown aggregation operation.'
                             );
                     }
-
                 }
-
             }
         );
     }
@@ -123,9 +123,8 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
     {
         $this->initializeComponent($grid);
         $this->provideFields();
-        $this->listen(
-            $this->grid->getConfig()->getDataProvider()
-        );
+        $this->listen($this->grid->getConfig()->getDataProvider());
+
         return null;
     }
 
@@ -163,7 +162,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      */
     public function getRowsProcessed()
     {
-        return $this->rows_processed;
+        return $this->rowsProcessed;
     }
 
     /**
@@ -175,11 +174,12 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      */
     public function setFieldNames(array $fieldNames)
     {
-        $this->field_names = $fieldNames;
+        $this->fieldNames = $fieldNames;
         $this->src = [];
-        foreach ($this->field_names as $name) {
+        foreach ($this->fieldNames as $name) {
             $this->src[$name] = 0;
         }
+
         return $this;
     }
 
@@ -190,7 +190,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      */
     public function getFieldNames()
     {
-        return $this->field_names;
+        return $this->fieldNames;
     }
 
     /**
@@ -199,7 +199,8 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      */
     public function setFieldOperations(array $fieldOperations)
     {
-        $this->field_operations = $fieldOperations;
+        $this->fieldOperations = $fieldOperations;
+
         return $this;
     }
 
@@ -208,7 +209,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      */
     public function getFieldOperations()
     {
-        return $this->field_operations;
+        return $this->fieldOperations;
     }
 
     /**
@@ -217,6 +218,6 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      */
     public function getFieldOperation($fieldName)
     {
-        return isset($this->field_operations[$fieldName])?$this->field_operations[$fieldName]:self::OPERATION_SUM;
+        return isset($this->fieldOperations[$fieldName]) ? $this->fieldOperations[$fieldName] : self::OPERATION_SUM;
     }
 }

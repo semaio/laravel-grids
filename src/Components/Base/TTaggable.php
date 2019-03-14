@@ -1,6 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components\Base;
-
+<?php namespace Nayjest\Grids\Components\Base;
 
 trait TTaggable
 {
@@ -23,6 +21,7 @@ trait TTaggable
     public function setTags(array $tags)
     {
         $this->tags = $tags;
+
         return $this;
     }
 
@@ -48,7 +47,7 @@ trait TTaggable
                 return false;
             }
         }
+
         return true;
     }
 }
-

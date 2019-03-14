@@ -1,6 +1,4 @@
-<?php
-
-namespace Nayjest\Grids\Build\Instructions;
+<?php namespace Nayjest\Grids\Build\Instructions;
 
 use LogicException;
 use Nayjest\Builder\Instructions\Base\Instruction;
@@ -38,12 +36,10 @@ class BuildDataProvider extends Instruction
                 $class = '\Nayjest\Grids\DbalDataProvider';
                 $arg = $src;
             }
-
         } elseif (is_string($src)) {
             // model name
-            if (
-                class_exists($src, true) &&
-                is_subclass_of($src, '\Illuminate\Database\Eloquent\Model')
+            if (class_exists($src, true)
+                && is_subclass_of($src, '\Illuminate\Database\Eloquent\Model')
             ) {
                 $class = '\Nayjest\Grids\EloquentDataProvider';
                 $model = new $src;
@@ -58,4 +54,3 @@ class BuildDataProvider extends Instruction
         }
     }
 }
-

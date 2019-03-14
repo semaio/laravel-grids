@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
 use Illuminate\Support\Collection;
 use Nayjest\Grids\Components\Base\RenderableComponentInterface;
@@ -19,38 +18,46 @@ class GridConfig implements RegistryInterface
 
     protected $template = 'grids::default';
 
-    /** @var FieldConfig[]|Collection */
+    /**
+     * @var FieldConfig[]|Collection
+     */
     protected $columns;
 
-    /** @var  DataProvider $data_provider */
-    protected $data_provider;
+    /**
+     * @var DataProvider
+     */
+    protected $dataProvider;
 
-    protected $page_size = 50;
+    protected $pageSize = 50;
 
-    /** @var Collection|FilterConfig[] $filters */
+    /**
+     * @var Collection|FilterConfig[]
+     */
     protected $filters;
 
-    /** @var int */
-    protected $caching_time = 0;
+    /**
+     * @var int
+     */
+    protected $cachingTime = 0;
 
-    protected $main_template = '*.grid';
+    protected $mainTemplate = '*.grid';
 
-    protected $row_component;
+    protected $rowComponent;
 
     /**
      * @return RenderableComponentInterface
      */
     public function getRowComponent()
     {
-        if (!$this->row_component) {
-            $this->row_component = (new Tr)
-                ->setRenderSection(self::SECTION_DO_NOT_RENDER);
+        if (!$this->rowComponent) {
+            $this->rowComponent = (new Tr)->setRenderSection(self::SECTION_DO_NOT_RENDER);
             if ($this->grid) {
-                $this->row_component->initialize($this->grid);
+                $this->rowComponent->initialize($this->grid);
             }
-            $this->addComponent($this->row_component);
+            $this->addComponent($this->rowComponent);
         }
-        return $this->row_component;
+
+        return $this->rowComponent;
     }
 
     /**
@@ -59,9 +66,10 @@ class GridConfig implements RegistryInterface
      */
     public function setRowComponent(RenderableComponentInterface $rowComponent)
     {
-        $this->row_component = $rowComponent;
+        $this->rowComponent = $rowComponent;
         $this->addComponent($rowComponent);
         $rowComponent->setRenderSection(self::SECTION_DO_NOT_RENDER);
+
         return $this;
     }
 
@@ -75,7 +83,7 @@ class GridConfig implements RegistryInterface
     {
         return [
             new THead,
-            new TFoot
+            new TFoot,
         ];
     }
 
@@ -86,20 +94,21 @@ class GridConfig implements RegistryInterface
     public function setTemplate($template)
     {
         $this->template = $template;
+
         return $this;
     }
 
     public function setMainTemplate($template)
     {
-        $this->main_template = $template;
+        $this->mainTemplate = $template;
+
         return $this;
     }
 
     public function getMainTemplate()
     {
-        return str_replace('*.', "$this->template.", $this->main_template);
+        return str_replace('*.', "$this->template.", $this->mainTemplate);
     }
-
 
     /**
      * @param Collection|FilterConfig[] $filters
@@ -108,6 +117,7 @@ class GridConfig implements RegistryInterface
     public function setFilters($filters)
     {
         $this->filters = Collection::make($filters);
+
         return $this;
     }
 
@@ -116,6 +126,7 @@ class GridConfig implements RegistryInterface
         if (null === $this->filters) {
             $this->filters = new Collection();
         }
+
         return $this->filters;
     }
 
@@ -133,7 +144,8 @@ class GridConfig implements RegistryInterface
      */
     public function setDataProvider(DataProvider $dataProvider)
     {
-        $this->data_provider = $dataProvider;
+        $this->dataProvider = $dataProvider;
+
         return $this;
     }
 
@@ -142,7 +154,7 @@ class GridConfig implements RegistryInterface
      */
     public function getDataProvider()
     {
-        return $this->data_provider;
+        return $this->dataProvider;
     }
 
     /**
@@ -152,6 +164,7 @@ class GridConfig implements RegistryInterface
     public function setColumns($columns)
     {
         $this->columns = Collection::make($columns);
+
         return $this;
     }
 
@@ -165,6 +178,7 @@ class GridConfig implements RegistryInterface
         if (null === $this->columns) {
             $this->columns = new Collection;
         }
+
         return $this->columns;
     }
 
@@ -181,7 +195,6 @@ class GridConfig implements RegistryInterface
                 return $column;
             }
         }
-
     }
 
     /**
@@ -191,7 +204,7 @@ class GridConfig implements RegistryInterface
      */
     public function getCachingTime()
     {
-        return $this->caching_time;
+        return $this->cachingTime;
     }
 
     /**
@@ -203,7 +216,8 @@ class GridConfig implements RegistryInterface
      */
     public function setCachingTime($minutes)
     {
-        $this->caching_time = $minutes;
+        $this->cachingTime = $minutes;
+
         return $this;
     }
 
@@ -219,6 +233,7 @@ class GridConfig implements RegistryInterface
             $this->setColumns([]);
         }
         $this->columns->push($column);
+
         return $this;
     }
 
@@ -230,7 +245,8 @@ class GridConfig implements RegistryInterface
      */
     public function setPageSize($pageSize)
     {
-        $this->page_size = (int)$pageSize;
+        $this->pageSize = (int)$pageSize;
+
         return $this;
     }
 
@@ -241,6 +257,6 @@ class GridConfig implements RegistryInterface
      */
     public function getPageSize()
     {
-        return $this->page_size;
+        return $this->pageSize;
     }
 }

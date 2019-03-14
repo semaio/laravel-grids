@@ -1,32 +1,38 @@
-<?php
-namespace Nayjest\Grids;
+<?php namespace Nayjest\Grids;
 
-use Event;
-use Cache;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\View;
 use Nayjest\Grids\Components\TFoot;
 use Nayjest\Grids\Components\THead;
-use View;
 
 class Grid
 {
-
     const SORT_ASC = 'ASC';
     const SORT_DESC = 'DESC';
 
     const EVENT_PREPARE = 'grid.prepare';
     const EVENT_CREATE = 'grid.create';
 
-    /** @var GridConfig */
+    /**
+     * @var GridConfig
+     */
     protected $config;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $prepared = false;
 
-    /** @var  Sorter */
+    /**
+     * @var Sorter
+     */
     protected $sorter;
 
-    /** @var  GridInputProcessor */
-    protected $input_processor;
+    /**
+     * @var GridInputProcessor
+     */
+    protected $inputProcessor;
 
     protected $filtering;
 
@@ -49,7 +55,6 @@ class Grid
         return $this->config->getMainTemplate();
     }
 
-
     public function prepare()
     {
         if ($this->prepared === true) {
@@ -57,12 +62,8 @@ class Grid
         }
         $cfg = $this->config;
         $cfg->getDataProvider()
-            ->setPageSize(
-                $cfg->getPageSize()
-            )
-            ->setCurrentPage(
-                $this->getInputProcessor()->getValue('page', 1)
-            );
+            ->setPageSize($cfg->getPageSize())
+            ->setCurrentPage($this->getInputProcessor()->getValue('page', 1));
         $this->getConfig()->prepare();
         $this->getFiltering()->apply();
         $this->prepareColumns();
@@ -90,10 +91,10 @@ class Grid
      */
     protected function provideName()
     {
-        $bt_len = 10;
-        $backtrace = debug_backtrace(null, $bt_len);
+        $backtraceLength = 10;
+        $backtrace = debug_backtrace(null, $backtraceLength);
         $str = '';
-        for ($id = 2; $id < $bt_len; $id++) {
+        for ($id = 2; $id < $backtraceLength; $id++) {
             $trace = isset($backtrace[$id]) ? $backtrace[$id] : [];
             if (empty($trace['class']) || !$this instanceof $trace['class']) {
                 # may be closure
@@ -117,6 +118,7 @@ class Grid
                 return true;
             }
         }
+
         return false;
     }
 
@@ -140,6 +142,7 @@ class Grid
         if (null === $this->sorter) {
             $this->sorter = new Sorter($this);
         }
+
         return $this->sorter;
     }
 
@@ -150,10 +153,11 @@ class Grid
      */
     public function getInputProcessor()
     {
-        if (null === $this->input_processor) {
-            $this->input_processor = new GridInputProcessor($this);
+        if (null === $this->inputProcessor) {
+            $this->inputProcessor = new GridInputProcessor($this);
         }
-        return $this->input_processor;
+
+        return $this->inputProcessor;
     }
 
     /**
@@ -167,10 +171,10 @@ class Grid
     public function getViewData()
     {
         return [
-            'grid' => $this,
-            'data' => $this->config->getDataProvider(),
+            'grid'     => $this,
+            'data'     => $this->config->getDataProvider(),
             'template' => $this->config->getTemplate(),
-            'columns' => $this->config->getColumns()
+            'columns'  => $this->config->getColumns(),
         ];
     }
 
@@ -182,20 +186,18 @@ class Grid
     public function render()
     {
         $key = $this->getInputProcessor()->getUniqueRequestId();
-        $caching_time = $this->config->getCachingTime();
-        if ($caching_time && ($output = Cache::get($key))) {
+        $cachingTime = $this->config->getCachingTime();
+        if ($cachingTime && ($output = Cache::get($key))) {
             return $output;
         } else {
             $this->prepare();
             $provider = $this->config->getDataProvider();
             $provider->reset();
-            $output = View::make(
-                $this->getMainTemplate(),
-                $this->getViewData()
-            )->render();
-            if ($caching_time) {
-                Cache::put($key, $output, $caching_time);
+            $output = View::make($this->getMainTemplate(), $this->getViewData())->render();
+            if ($cachingTime) {
+                Cache::put($key, $output, $cachingTime);
             }
+
             return $output;
         }
     }
@@ -230,6 +232,7 @@ class Grid
         if ($this->filtering === null) {
             $this->filtering = new Filtering($this);
         }
+
         return $this->filtering;
     }
 

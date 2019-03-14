@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components;
+<?php namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Grid;
 
@@ -12,7 +11,7 @@ use Nayjest\Grids\Grid;
  */
 class ColumnHeadersRow extends HtmlTag
 {
-    protected $tag_name = 'tr';
+    protected $tagName = 'tr';
 
     /**
      * Initializes component with grid

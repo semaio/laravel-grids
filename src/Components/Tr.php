@@ -1,5 +1,4 @@
-<?php
-namespace Nayjest\Grids\Components;
+<?php namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\DataRowInterface;
 
@@ -12,8 +11,10 @@ use Nayjest\Grids\DataRowInterface;
  */
 class Tr extends HtmlTag
 {
-    /** @var DataRowInterface  */
-    protected $data_row;
+    /**
+     * @var DataRowInterface
+     */
+    protected $dataRow;
 
     /**
      * Returns data row.
@@ -22,7 +23,7 @@ class Tr extends HtmlTag
      */
     public function getDataRow()
     {
-        return $this->data_row;
+        return $this->dataRow;
     }
 
     /**
@@ -33,7 +34,8 @@ class Tr extends HtmlTag
      */
     public function setDataRow(DataRowInterface $dataRow)
     {
-        $this->data_row = $dataRow;
+        $this->dataRow = $dataRow;
+
         return $this;
     }
 
@@ -46,12 +48,13 @@ class Tr extends HtmlTag
     {
         $row = $this->getDataRow();
         $out = '';
-        foreach($this->grid->getConfig()->getColumns() as $column) {
+        foreach ($this->grid->getConfig()->getColumns() as $column) {
             $component = new TableCell($column);
             $component->initialize($this->grid);
             $component->setContent($column->getValue($row));
             $out .= $component->render();
         }
+
         return $out;
     }
 
