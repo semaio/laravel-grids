@@ -1,9 +1,7 @@
-laravel-grids
-=============
+Data Grids Framework for Laravel 5.7+
+=====================================
 
 This package is a fork and improved version of the [Nayjest/Grids](https://github.com/Nayjest/Grids) package.
-
-### `Data Grids Framework for Laravel 5`
 
 ## Features
 * Data providers (php array, Eloquent model, Doctrine DBAL query object)
