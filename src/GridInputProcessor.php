@@ -1,7 +1,6 @@
 <?php namespace Nayjest\Grids;
 
 use Collective\Html\FormFacade as Form;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 
 /**
@@ -36,7 +35,7 @@ class GridInputProcessor
 
     protected function loadInput()
     {
-        $this->input = Input::get($this->getKey(), []);
+        $this->input = Request::input($this->getKey(), []);
     }
 
     /**

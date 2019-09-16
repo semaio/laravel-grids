@@ -2,6 +2,7 @@
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use Nayjest\Grids\Components\Base\RenderableComponent;
 use Nayjest\Grids\Grid;
 
@@ -24,7 +25,7 @@ class Pager extends RenderableComponent
     protected function setupPaginationForReading()
     {
         Paginator::currentPageResolver(function () {
-            return Input::get("$this->inputKey.page", 1);
+            return Request::input("$this->inputKey.page", 1);
         });
     }
 
