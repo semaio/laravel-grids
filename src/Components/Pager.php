@@ -1,7 +1,6 @@
 <?php namespace Nayjest\Grids\Components;
 
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 use Nayjest\Grids\Components\Base\RenderableComponent;
 use Nayjest\Grids\Grid;
