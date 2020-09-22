@@ -29,8 +29,8 @@
   ],
   "require": {
     "php": "^7.2",
-    "illuminate/support": "^6.0|^7.0",
-    "laravelcollective/html": "^6.0|^7.0",
+    "illuminate/support": "^6.0|^7.0|^8.0",
+    "laravelcollective/html": "^6.0|^7.0|^8.0",
     "nayjest/builder": "~2"
   },
   "require-dev": {
