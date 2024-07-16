@@ -1,13 +1,13 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
 
-use Illuminate\Foundation\Application;
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 /**
  * Class TFoot
  *
  * The component for rendering TFOOT html tag inside grid.
- *
- * @package Nayjest\Grids\Components
  */
 class TFoot extends HtmlTag
 {

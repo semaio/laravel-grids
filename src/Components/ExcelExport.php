@@ -1,8 +1,12 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
 
-use Illuminate\Support\Facades\Event;
-use Illuminate\Pagination\Paginator;
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
+
 use Illuminate\Foundation\Application;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Event;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
@@ -19,18 +23,23 @@ use Nayjest\Grids\Grid;
  * The component provides control for exporting data to excel.
  *
  * @author  Alexander Hofmeister
- * @package Nayjest\Grids\Components
  */
 class ExcelExport extends RenderableComponent
 {
     const NAME = 'excel_export';
+
     const INPUT_PARAM = 'xls';
+
     const DEFAULT_ROWS_LIMIT = 5000;
 
     protected $template = '*.components.excel_export';
+
     protected $name = ExcelExport::NAME;
+
     protected $renderSection = RenderableRegistry::SECTION_END;
+
     protected $rowsLimit = self::DEFAULT_ROWS_LIMIT;
+
     protected $extension = 'xls';
 
     /**
@@ -57,12 +66,12 @@ class ExcelExport extends RenderableComponent
     protected $onSheetCreate;
 
     /**
-     * @param Grid $grid
      * @return null|void
      */
     public function initialize(Grid $grid)
     {
         parent::initialize($grid);
+
         Event::listen(Grid::EVENT_PREPARE, function (Grid $grid) {
             if ($this->grid !== $grid) {
                 return;
@@ -76,7 +85,7 @@ class ExcelExport extends RenderableComponent
     /**
      * Sets name of exported file.
      *
-     * @param string $name
+     * @param  string  $name
      * @return $this
      */
     public function setFileName($name)
@@ -97,7 +106,7 @@ class ExcelExport extends RenderableComponent
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return $this
      */
     public function setSheetName($name)
@@ -116,7 +125,7 @@ class ExcelExport extends RenderableComponent
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return $this
      */
     public function setExtension($name)
@@ -143,8 +152,7 @@ class ExcelExport extends RenderableComponent
     }
 
     /**
-     * @param int $limit
-     *
+     * @param  int  $limit
      * @return $this
      */
     public function setRowsLimit($limit)
@@ -168,7 +176,6 @@ class ExcelExport extends RenderableComponent
     }
 
     /**
-     * @param FieldConfig $column
      * @return bool
      */
     protected function isColumnExported(FieldConfig $column)
@@ -179,6 +186,7 @@ class ExcelExport extends RenderableComponent
 
     /**
      * @internal
+     *
      * @return array
      */
     public function getData()
@@ -241,7 +249,7 @@ class ExcelExport extends RenderableComponent
     }
 
     /**
-     * @param string[] $ignoredColumns
+     * @param  string[]  $ignoredColumns
      * @return $this
      */
     public function setIgnoredColumns(array $ignoredColumns)
@@ -252,7 +260,7 @@ class ExcelExport extends RenderableComponent
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isHiddenColumnsExported()
     {
@@ -260,7 +268,7 @@ class ExcelExport extends RenderableComponent
     }
 
     /**
-     * @param bool $isHiddenColumnsExported
+     * @param  bool  $isHiddenColumnsExported
      * @return $this
      */
     public function setHiddenColumnsExported($isHiddenColumnsExported)
@@ -285,8 +293,7 @@ class ExcelExport extends RenderableComponent
     }
 
     /**
-     * @param callable $onFileCreate
-     *
+     * @param  callable  $onFileCreate
      * @return $this
      */
     public function setOnFileCreate($onFileCreate)
@@ -311,8 +318,7 @@ class ExcelExport extends RenderableComponent
     }
 
     /**
-     * @param callable $onSheetCreate
-     *
+     * @param  callable  $onSheetCreate
      * @return $this
      */
     public function setOnSheetCreate($onSheetCreate)

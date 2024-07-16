@@ -1,23 +1,28 @@
-<?php namespace Nayjest\Grids\Components\Base;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components\Base;
 
 /**
  * Class RenderableRegistry
  *
  * Base class for components that can hold children components and be rendered.
- *
- * @package Nayjest\Grids\Components\Base
  */
-class RenderableRegistry implements RenderableComponentInterface, RegistryInterface
+class RenderableRegistry implements RegistryInterface, RenderableComponentInterface
 {
     use TComponent;
-    use TRegistry;
     use TComponentView {
         TComponentView::render as protected renderTemplate;
     }
+    use TRegistry;
 
     const SECTION_BEGIN = 'begin';
+
     const SECTION_END = 'end';
+
     const SECTION_BEFORE = 'before';
+
     const SECTION_AFTER = 'after';
 
     /**
@@ -25,7 +30,7 @@ class RenderableRegistry implements RenderableComponentInterface, RegistryInterf
      *
      * By default components without specified section will be rendered.
      *
-     * @param string|null $sectionName
+     * @param  string|null  $sectionName
      * @return string
      */
     public function renderComponents($sectionName = null)
@@ -42,7 +47,7 @@ class RenderableRegistry implements RenderableComponentInterface, RegistryInterf
     /**
      * Returns components filtered by section name.
      *
-     * @param string $sectionName
+     * @param  string  $sectionName
      * @return \Illuminate\Support\Collection
      */
     public function getSectionComponents($sectionName)
@@ -58,14 +63,14 @@ class RenderableRegistry implements RenderableComponentInterface, RegistryInterf
     /**
      * Wraps content with outside components (components that have 'before' or 'after' render_section value).
      *
-     * @param string $output
+     * @param  string  $output
      * @return string
      */
     protected function wrapWithOutsideComponents($output)
     {
         return $this->renderComponents(self::SECTION_BEFORE)
-            . $output
-            . $this->renderComponents(self::SECTION_AFTER);
+            .$output
+            .$this->renderComponents(self::SECTION_AFTER);
     }
 
     /**
@@ -76,8 +81,8 @@ class RenderableRegistry implements RenderableComponentInterface, RegistryInterf
     protected function renderInnerComponents()
     {
         return $this->renderComponents(self::SECTION_BEGIN)
-            . $this->renderComponents()
-            . $this->renderComponents(self::SECTION_END);
+            .$this->renderComponents()
+            .$this->renderComponents(self::SECTION_END);
     }
 
     /**

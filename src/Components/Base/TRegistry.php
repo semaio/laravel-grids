@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components\Base;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components\Base;
 
 use Illuminate\Support\Collection;
 use Nayjest\Grids\Grid;
@@ -36,7 +40,7 @@ trait TRegistry
     /**
      * Finds child component by name.
      *
-     * @param string $name
+     * @param  string  $name
      * @return null|ComponentInterface
      */
     public function getComponentByName($name)
@@ -51,7 +55,7 @@ trait TRegistry
     /**
      * Finds child component by name recursively.
      *
-     * @param string $name
+     * @param  string  $name
      * @return null|ComponentInterface
      */
     public function getComponentByNameRecursive($name)
@@ -71,7 +75,7 @@ trait TRegistry
     }
 
     /**
-     * @param string|string[] $tagNames
+     * @param  string|string[]  $tagNames
      * @return Collection|ComponentInterface[]
      */
     public function getTagged($tagNames)
@@ -86,7 +90,6 @@ trait TRegistry
     /**
      * Adds component to the collection of child components.
      *
-     * @param ComponentInterface $component
      * @return $this
      */
     public function addComponent(ComponentInterface $component)
@@ -100,7 +103,7 @@ trait TRegistry
     /**
      * Allows to specify collection of child components.
      *
-     * @param \Illuminate\Support\Collection|ComponentInterface[]|array $components
+     * @param  \Illuminate\Support\Collection|ComponentInterface[]|array  $components
      * @return $this
      */
     public function setComponents($components)
@@ -116,7 +119,7 @@ trait TRegistry
     /**
      * Adds set of components to the collection of child components.
      *
-     * @param  Collection|\Illuminate\Support\Contracts\ArrayableInterface|array $components
+     * @param  Collection|\Illuminate\Support\Contracts\ArrayableInterface|array  $components
      * @return $this
      */
     public function addComponents($components)
@@ -132,7 +135,7 @@ trait TRegistry
      * Creates component,
      * adds it to child components collection and returns it.
      *
-     * @param string $class
+     * @param  string  $class
      * @return ComponentInterface
      */
     public function makeComponent($class)
@@ -145,8 +148,6 @@ trait TRegistry
 
     /**
      * Initializes child components.
-     *
-     * @param Grid $grid
      */
     public function initializeComponents(Grid $grid)
     {

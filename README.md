@@ -1,4 +1,4 @@
-Data Grids Framework for Laravel 5.7+
+Data Table (Grid) Builder for Laravel
 =====================================
 
 This package is a fork and improved version of the [Nayjest/Grids](https://github.com/Nayjest/Grids) package.
@@ -26,25 +26,15 @@ This package is a fork and improved version of the [Nayjest/Grids](https://githu
 
 ## Requirements
 
-* PHP 7.1+
-* Laravel 5.7+
+* PHP 8.2+
+* Laravel 11+
 
 ## Installation
 
-##### Step 1: Install package using [Composer](https://getcomposer.org)
-
-Run the following command in the root directory of your project:
+Run the following command in the root directory of your project to install the package using [Composer](https://getcomposer.org):
 
 ```bash
-composer.phar require semaio/laravel-grids:^2.0
-```
-
-##### Step 2: Laravel Setup
-You may add facade aliases to your application configuration:
-```php
-    'Form'  => 'Collective\Html\FormFacade',
-    'HTML'  => 'Collective\Html\HtmlFacade',
-    'Grids' => 'Nayjest\Grids\Grids',
+composer.phar require semaio/laravel-grids:^5.0
 ```
 
 ## Usage

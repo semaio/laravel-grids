@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components\Base;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components\Base;
 
 use Illuminate\Support\Facades\View;
 
@@ -9,8 +13,6 @@ use Illuminate\Support\Facades\View;
  *
  * @todo    Avoid usage of Laravel Facade aliases (?)
  * @todo    Absence of getViewData isn't convenient (?)
- *
- * @package Nayjest\Grids\Components\Base
  */
 trait TRenderable
 {
@@ -49,7 +51,7 @@ trait TRenderable
     /**
      * Allows to specify view template.
      *
-     * @param string $template
+     * @param  string  $template
      * @return $this
      */
     public function setTemplate($template)
@@ -76,6 +78,6 @@ trait TRenderable
      */
     public function __toString()
     {
-        return (string)$this->render();
+        return (string) $this->render();
     }
 }

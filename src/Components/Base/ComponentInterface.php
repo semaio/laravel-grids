@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components\Base;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components\Base;
 
 use Nayjest\Grids\Grid;
 
@@ -9,15 +13,12 @@ use Nayjest\Grids\Grid;
  *
  * Basically, component is an object that can be attached
  * to grid components hierarchy and react to initialize & prepare calls.
- *
- * @package Nayjest\Grids\Components\Base
  */
 interface ComponentInterface extends TaggableInterface
 {
     /**
      * Attaches component to registry.
      *
-     * @param RegistryInterface $parent
      * @return null
      */
     public function attachTo(RegistryInterface $parent);
@@ -32,7 +33,6 @@ interface ComponentInterface extends TaggableInterface
     /**
      * Initializes component with grid.
      *
-     * @param Grid $grid
      * @return null
      */
     public function initialize(Grid $grid);
@@ -54,7 +54,7 @@ interface ComponentInterface extends TaggableInterface
     /**
      * Sets component name.
      *
-     * @param string $name
+     * @param  string  $name
      * @return $this
      */
     public function setName($name);

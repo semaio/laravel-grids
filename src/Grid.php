@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
@@ -9,9 +13,11 @@ use Nayjest\Grids\Components\THead;
 class Grid
 {
     const SORT_ASC = 'ASC';
+
     const SORT_DESC = 'DESC';
 
     const EVENT_PREPARE = 'grid.prepare';
+
     const EVENT_CREATE = 'grid.create';
 
     /**
@@ -97,9 +103,9 @@ class Grid
         for ($id = 2; $id < $backtraceLength; $id++) {
             $trace = isset($backtrace[$id]) ? $backtrace[$id] : [];
             if (empty($trace['class']) || !$this instanceof $trace['class']) {
-                # may be closure
+                // may be closure
                 if (isset($trace['file'], $trace['line'])) {
-                    $str .= $trace['file'] . $trace['line'];
+                    $str .= $trace['file'].$trace['line'];
                 }
             }
         }
@@ -139,7 +145,7 @@ class Grid
      */
     public function getSorter()
     {
-        if (null === $this->sorter) {
+        if ($this->sorter === null) {
             $this->sorter = new Sorter($this);
         }
 
@@ -153,7 +159,7 @@ class Grid
      */
     public function getInputProcessor()
     {
-        if (null === $this->inputProcessor) {
+        if ($this->inputProcessor === null) {
             $this->inputProcessor = new GridInputProcessor($this);
         }
 
@@ -171,10 +177,10 @@ class Grid
     public function getViewData()
     {
         return [
-            'grid'     => $this,
-            'data'     => $this->config->getDataProvider(),
+            'grid' => $this,
+            'data' => $this->config->getDataProvider(),
             'template' => $this->config->getTemplate(),
-            'columns'  => $this->config->getColumns(),
+            'columns' => $this->config->getColumns(),
         ];
     }
 
@@ -243,6 +249,6 @@ class Grid
      */
     public function __toString()
     {
-        return (string)$this->render();
+        return (string) $this->render();
     }
 }

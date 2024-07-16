@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\DataRowInterface;
 
@@ -6,8 +10,6 @@ use Nayjest\Grids\DataRowInterface;
  * Class Tr
  *
  * The component for rendering TR html tag inside grid.
- *
- * @package Nayjest\Grids\Components
  */
 class Tr extends HtmlTag
 {
@@ -29,7 +31,6 @@ class Tr extends HtmlTag
     /**
      * Allows to set data row.
      *
-     * @param DataRowInterface $dataRow
      * @return $this
      */
     public function setDataRow(DataRowInterface $dataRow)

@@ -1,15 +1,16 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 /**
  * Class DataRow
  *
  * Abstract class for DataRowInterface implementations
- *
- * @package Nayjest\Grids
  */
 abstract class DataRow implements DataRowInterface
 {
-
     /**
      * @var mixed row data
      */
@@ -23,8 +24,7 @@ abstract class DataRow implements DataRowInterface
     /**
      * Constructor.
      *
-     * @param     $src
-     * @param int $id
+     * @param  int  $id
      */
     public function __construct($src, $id)
     {
@@ -57,7 +57,7 @@ abstract class DataRow implements DataRowInterface
     /**
      * Returns value for specified column.
      *
-     * @param string $fieldName
+     * @param  string  $fieldName
      * @return mixed
      */
     abstract protected function extractCellValue($fieldName);
@@ -65,7 +65,7 @@ abstract class DataRow implements DataRowInterface
     /**
      * Returns value of specified column from row.
      *
-     * @param FieldConfig|string $field
+     * @param  FieldConfig|string  $field
      * @return mixed
      */
     public function getCellValue($field)

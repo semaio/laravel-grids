@@ -1,5 +1,2 @@
 /vendor
-composer.phar
 composer.lock
-apigen.phar
-.php_cs.cache

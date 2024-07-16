@@ -1,9 +1,11 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 /**
  * Class DataProvider
- *
- * @package Nayjest\Grids
  */
 abstract class DataProvider
 {
@@ -20,7 +22,7 @@ abstract class DataProvider
     /**
      * Constructor.
      *
-     * @param mixed $src data source
+     * @param  mixed  $src  data source
      */
     public function __construct($src)
     {
@@ -42,7 +44,7 @@ abstract class DataProvider
     /**
      * Sets page size.
      *
-     * @param int $pageSize
+     * @param  int  $pageSize
      * @return $this
      */
     public function setPageSize($pageSize)
@@ -55,7 +57,7 @@ abstract class DataProvider
     /**
      * Sets current page number. Page numeration starts from 1.
      *
-     * @param int $currentPage
+     * @param  int  $currentPage
      */
     public function setCurrentPage($currentPage)
     {
@@ -85,8 +87,7 @@ abstract class DataProvider
     /**
      * Sets data sorting.
      *
-     * @param string $fieldName
-     * @param        $direction
+     * @param  string  $fieldName
      * @return $this
      */
     abstract public function orderBy($fieldName, $direction);
@@ -94,9 +95,9 @@ abstract class DataProvider
     /**
      * Performs filtering.
      *
-     * @param string $fieldName
-     * @param string $operator
-     * @param mixed  $value
+     * @param  string  $fieldName
+     * @param  string  $operator
+     * @param  mixed  $value
      * @return $this
      */
     abstract public function filter($fieldName, $operator, $value);
@@ -130,7 +131,9 @@ abstract class DataProvider
      * Returns count of records on current page.
      *
      * @todo rename to something like recordsOnPage
+     *
      * @deprecated
+     *
      * @return int
      */
     abstract public function count();

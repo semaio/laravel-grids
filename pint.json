@@ -1,0 +1,22 @@
+{
+    "preset": "laravel",
+    "exclude": [
+        "_tmp"
+    ],
+    "rules": {
+        "curly_braces_position": {
+            "anonymous_classes_opening_brace": "same_line"
+        },
+        "declare_strict_types": true,
+        "global_namespace_import": {
+            "import_classes": true,
+            "import_constants": false,
+            "import_functions": false
+        },
+        "not_operator_with_successor_space": false,
+        "ordered_imports": {
+            "sort_algorithm": "alpha"
+        },
+        "single_line_empty_body": true
+    }
+}

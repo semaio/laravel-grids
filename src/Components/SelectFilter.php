@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 class SelectFilter extends Filter
 {

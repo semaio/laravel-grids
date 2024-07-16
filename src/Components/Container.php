@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableRegistry;
 
@@ -10,7 +14,6 @@ class Container extends RenderableRegistry
     protected $htmlTags = ['div'];
 
     /**
-     * @param array $tags
      * @return $this
      */
     public function setHtmlTags(array $tags)
@@ -27,11 +30,12 @@ class Container extends RenderableRegistry
     {
         $before = '';
         $after = '';
+
         foreach ($this->htmlTags as $tag) {
             $before .= "<$tag>";
-            $after = "</$tag>" . $after;
+            $after = "</$tag>".$after;
         }
 
-        return $before . $this->renderComponents() . $after;
+        return $before.$this->renderComponents().$after;
     }
 }

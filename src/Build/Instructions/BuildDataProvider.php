@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Build\Instructions;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Build\Instructions;
 
 use LogicException;
 use Nayjest\Builder\Instructions\Base\Instruction;
@@ -11,14 +15,12 @@ use Nayjest\Builder\Scaffold;
  * that defines how to setup grids data provider
  *
  * @internal
- * @package Nayjest\Grids\Build\Instructions
  */
 class BuildDataProvider extends Instruction
 {
     protected $phase = self::PHASE_PRE_INST;
 
     /**
-     * @param Scaffold $scaffold
      * @throws LogicException
      */
     public function apply(Scaffold $scaffold)

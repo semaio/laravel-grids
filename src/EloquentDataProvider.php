@@ -1,32 +1,28 @@
-<?php namespace Nayjest\Grids;
+<?php
 
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
+
+use ArrayIterator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 
 class EloquentDataProvider extends DataProvider
 {
-    /**
-     * @var
-     */
     protected $collection;
 
-    /**
-     * @var
-     */
     protected $paginator;
 
     /**
-     * @var \ArrayIterator
+     * @var ArrayIterator
      */
     protected $iterator;
 
     /**
      * Constructor.
-     *
-     * @param Builder $src
      */
     public function __construct(Builder $src)
     {
@@ -79,7 +75,7 @@ class EloquentDataProvider extends DataProvider
     }
 
     /**
-     * @return \ArrayIterator
+     * @return ArrayIterator
      */
     protected function getIterator()
     {
@@ -99,7 +95,7 @@ class EloquentDataProvider extends DataProvider
     }
 
     /**
-     * @return DataRow|EloquentDataRow|null
+     * @return DataRow|ObjectDataRow|null
      */
     public function getRow()
     {
@@ -107,7 +103,7 @@ class EloquentDataProvider extends DataProvider
             $this->index++;
             $item = $this->iterator->current();
             $this->iterator->next();
-            $row = new EloquentDataRow($item, $this->getRowId());
+            $row = new ObjectDataRow($item, $this->getRowId());
             Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
 
             return $row;
@@ -175,8 +171,8 @@ class EloquentDataProvider extends DataProvider
             case 'ft':
                 // @codingStandardsIgnoreStart
                 $this->src
-                    ->select(DB::raw('*, match(' . $fieldName . ') against (' . DB::connection()->getPdo()->quote($value) . ' in boolean mode) as score'))
-                    ->whereRaw('match(' . $fieldName . ') against (' . DB::connection()->getPdo()->quote($value) . ' in boolean mode)')
+                    ->select(DB::raw('*, match('.$fieldName.') against ('.DB::connection()->getPdo()->quote($value).' in boolean mode) as score'))
+                    ->whereRaw('match('.$fieldName.') against ('.DB::connection()->getPdo()->quote($value).' in boolean mode)')
                     ->orderBy('score', 'desc');
                 // @codingStandardsIgnoreEnd
 

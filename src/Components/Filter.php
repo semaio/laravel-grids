@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableComponent;
 
@@ -31,7 +35,7 @@ class Filter extends RenderableComponent
      * Function will accept filter value as first argument and data provider
      * as second argument.
      *
-     * @param callable $func
+     * @param  callable  $func
      * @return $this
      */
     public function setFilteringFunc($func)
@@ -61,7 +65,7 @@ class Filter extends RenderableComponent
     /**
      * Sets text label for filtering control.
      *
-     * @param string|null $label
+     * @param  string|null  $label
      * @return $this
      */
     public function setLabel($label)
@@ -84,7 +88,6 @@ class Filter extends RenderableComponent
     /**
      * Sets default filter value.
      *
-     * @param $value
      * @return $this
      */
     public function setDefaultValue($value)
@@ -104,9 +107,9 @@ class Filter extends RenderableComponent
         $input = $this->grid->getInputProcessor()->getFilterValue($this->name);
         if ($input === null) {
             return $this->getDefaultValue();
-        } else {
-            return $input;
         }
+
+        return $input;
     }
 
     /**
@@ -122,9 +125,6 @@ class Filter extends RenderableComponent
         return $this->getValue() !== null && $this->getValue() !== '';
     }
 
-    /**
-     *
-     */
     public function prepare()
     {
         if (!$this->hasValue()) {

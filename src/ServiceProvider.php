@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -16,6 +20,7 @@ class ServiceProvider extends BaseServiceProvider
      * This method required for backward compatibility with Laravel 4.
      *
      * @deprecated
+     *
      * @return string
      */
     public function guessPackagePath()
@@ -31,10 +36,10 @@ class ServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $pkgPath = dirname(__DIR__);
-        $viewsPath = $pkgPath . '/resources/views';
+        $viewsPath = $pkgPath.'/resources/views';
 
         $this->loadViewsFrom($viewsPath, 'grids');
-        $this->loadTranslationsFrom($pkgPath . '/resources/lang', 'grids');
+        $this->loadTranslationsFrom($pkgPath.'/resources/lang', 'grids');
         $this->publishes([
             $viewsPath => base_path('resources/views/vendor/grids'),
         ]);

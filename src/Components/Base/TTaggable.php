@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components\Base;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components\Base;
 
 trait TTaggable
 {
@@ -6,6 +10,7 @@ trait TTaggable
 
     /**
      * @deprecated
+     *
      * @return array
      */
     public function getTags()
@@ -15,7 +20,7 @@ trait TTaggable
 
     /**
      * @deprecated
-     * @param array $tags
+     *
      * @return $this
      */
     public function setTags(array $tags)
@@ -27,7 +32,8 @@ trait TTaggable
 
     /**
      * @deprecated
-     * @param string $tagName
+     *
+     * @param  string  $tagName
      * @return bool
      */
     public function hasTag($tagName)
@@ -37,7 +43,8 @@ trait TTaggable
 
     /**
      * @deprecated
-     * @param array|string[] $tagNames
+     *
+     * @param  array|string[]  $tagNames
      * @return bool
      */
     public function hasTags(array $tagNames)

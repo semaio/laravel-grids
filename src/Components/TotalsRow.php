@@ -1,23 +1,25 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
 
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
+
+use Illuminate\Support\Facades\Event;
 use LogicException;
+use Nayjest\Grids\ArrayDataRow;
 use Nayjest\Grids\Components\Base\RenderableComponentInterface;
 use Nayjest\Grids\Components\Base\TComponent;
 use Nayjest\Grids\Components\Base\TComponentView;
-use Nayjest\Grids\ArrayDataRow;
 use Nayjest\Grids\DataProvider;
 use Nayjest\Grids\DataRow;
 use Nayjest\Grids\FieldConfig;
-use Nayjest\Grids\IdFieldConfig;
 use Nayjest\Grids\Grid;
-use Illuminate\Support\Facades\Event;
+use Nayjest\Grids\IdFieldConfig;
 
 /**
  * Class TotalsRow
  *
  * The component renders row with totals for current page.
- *
- * @package Nayjest\Grids\Components
  */
 class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
 {
@@ -27,7 +29,9 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
     use TComponentView;
 
     const OPERATION_SUM = 'sum';
+
     const OPERATION_AVG = 'avg';
+
     const OPERATION_COUNT = 'count';
     //const OPERATION_MAX = 'max';
     //const OPERATION_MIN = 'min';
@@ -46,7 +50,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
     /**
      * Constructor.
      *
-     * @param array|string[] $fieldNames
+     * @param  array|string[]  $fieldNames
      */
     public function __construct(array $fieldNames = [])
     {
@@ -70,8 +74,6 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      * Creates listener for grid.dp.fetch_row event.
      *
      * The listener will perform totals calculation.
-     *
-     * @param DataProvider $provider
      */
     protected function listen(DataProvider $provider)
     {
@@ -116,7 +118,6 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
     /**
      * Performs component initialization.
      *
-     * @param Grid $grid
      * @return null
      */
     public function initialize(Grid $grid)
@@ -131,7 +132,6 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
     /**
      * Returns true if the component uses specified column for totals calculation.
      *
-     * @param FieldConfig $field
      * @return bool
      */
     public function uses(FieldConfig $field)
@@ -140,7 +140,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
     }
 
     /**
-     * @param FieldConfig|string $field
+     * @param  FieldConfig|string  $field
      * @return mixed|null
      */
     public function getCellValue($field)
@@ -169,7 +169,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
      * Allows to specify list of fields
      * which will be used for totals calculation.
      *
-     * @param array|string[] $fieldNames
+     * @param  array|string[]  $fieldNames
      * @return $this
      */
     public function setFieldNames(array $fieldNames)
@@ -194,7 +194,6 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
     }
 
     /**
-     * @param array $fieldOperations
      * @return $this
      */
     public function setFieldOperations(array $fieldOperations)
@@ -213,7 +212,7 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
     }
 
     /**
-     * @param string $fieldName
+     * @param  string  $fieldName
      * @return string
      */
     public function getFieldOperation($fieldName)

@@ -1,8 +1,10 @@
 <?php
 /** @var Nayjest\Grids\Components\SelectFilter $component */
 $value = $component->getValue();
-if (!is_array($value)) $value = [];
-$id = uniqid() . mt_rand();
+if (!is_array($value)) {
+    $value = [];
+}
+$id = uniqid().mt_rand();
 ?>
 <div class="btn-group">
     <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
@@ -25,8 +27,8 @@ $id = uniqid() . mt_rand();
                 </label>
             </div>
         </li>
-        <?php foreach ($component->getVariants() as $val => $label): ?>
-            <?php if (is_array($label)): ?>
+        <?php foreach ($component->getVariants() as $val => $label) { ?>
+            <?php if (is_array($label)) { ?>
                 <?php
                 $class = '';
                 if (array_intersect(array_keys($label['values']), array_keys($value))) {
@@ -40,7 +42,7 @@ $id = uniqid() . mt_rand();
                     </a>
 
                     <div class="collapse<?= $class ?>" id="collapse<?= $val ?>" style="margin-left: 25px;">
-                        <?php if (count($label['values']) > 1): ?>
+                        <?php if (count($label['values']) > 1) { ?>
                             <div>
                                 <label>
                                     <input
@@ -50,34 +52,38 @@ $id = uniqid() . mt_rand();
                                     <span><u>Check Group</u></span>
                                 </label>
                             </div>
-                        <?php endif ?>
-                        <?php foreach ($label['values'] as $option_val => $option_label): ?>
+                        <?php } ?>
+                        <?php foreach ($label['values'] as $option_val => $option_label) { ?>
                             <div>
                                 <label>
                                     <input
                                             type="checkbox"
-                                        <?php if (!empty($value[$option_val])) echo "checked='checked'" ?>
+                                        <?php if (!empty($value[$option_val])) {
+                                            echo "checked='checked'";
+                                        } ?>
                                             name="<?= $component->getInputName() ?>[<?= $option_val ?>]"
                                     >
                                     <span><?= $option_label ?></span>
                                 </label>
                             </div>
-                        <?php endforeach ?>
+                        <?php } ?>
                     </div>
                 </li>
-            <?php else: ?>
+            <?php } else { ?>
                 <li style="white-space: nowrap">
                     <label>
                         <input
                                 type="checkbox"
-                            <?php if (!empty($value[$val])) echo "checked='checked'" ?>
+                            <?php if (!empty($value[$val])) {
+                                echo "checked='checked'";
+                            } ?>
                                 name="<?= $component->getInputName() ?>[<?= $val ?>]"
                         >
                         <span><?= $label ?></span>
                     </label>
                 </li>
-            <?php endif ?>
-        <?php endforeach ?>
+            <?php } ?>
+        <?php } ?>
     </ul>
 </div>
 <script>

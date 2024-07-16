@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableComponent;
 use Nayjest\Grids\Components\Base\RenderableRegistry;
@@ -9,8 +13,6 @@ use Nayjest\Grids\FieldConfig;
  *
  * The component for rendering sorting controls
  * added to column header automatically when field is sortable.
- *
- * @package Nayjest\Grids\Components
  */
 class SortingControl extends RenderableComponent
 {
@@ -30,8 +32,6 @@ class SortingControl extends RenderableComponent
 
     /**
      * Constructor.
-     *
-     * @param FieldConfig $column
      */
     public function __construct(FieldConfig $column)
     {
@@ -50,8 +50,6 @@ class SortingControl extends RenderableComponent
 
     /**
      * Sets associated column.
-     *
-     * @param FieldConfig $column
      */
     public function setColumn(FieldConfig $column)
     {

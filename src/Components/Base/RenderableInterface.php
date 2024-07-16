@@ -1,11 +1,13 @@
-<?php namespace Nayjest\Grids\Components\Base;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components\Base;
 
 /**
  * Interface RenderableInterface
  *
  * Interface for objects that can be rendered.
- *
- * @package Nayjest\Grids\Components\Base
  */
 interface RenderableInterface
 {
@@ -26,7 +28,7 @@ interface RenderableInterface
     /**
      * Sets template.
      *
-     * @param string $template
+     * @param  string  $template
      * @return $this
      */
     public function setTemplate($template);
@@ -41,7 +43,7 @@ interface RenderableInterface
     /**
      * Returns true if object was rendered.
      *
-     * @return boolean
+     * @return bool
      */
     public function isRendered();
 }

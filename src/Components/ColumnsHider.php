@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableComponent;
 
@@ -6,8 +10,6 @@ use Nayjest\Grids\Components\Base\RenderableComponent;
  * Class ColumnsHider
  *
  * The component renders control for showing/hiding columns.
- *
- * @package Nayjest\Grids\Components
  */
 class ColumnsHider extends RenderableComponent
 {
@@ -20,7 +22,7 @@ class ColumnsHider extends RenderableComponent
     protected $title = 'Columns';
 
     /**
-     * @param array|string[] $columnNames
+     * @param  array|string[]  $columnNames
      * @return $this
      */
     public function setHiddenByDefault(array $columnNames)
@@ -44,26 +46,26 @@ class ColumnsHider extends RenderableComponent
     public function getColumnsVisibility()
     {
         $key = $this->getId('cookie');
+
+        $fromCookie = [];
         if (isset($_COOKIE[$key])) {
             $fromCookie = json_decode($_COOKIE[$key], true);
-        } else {
-            $fromCookie = [];
         }
-        $res = [];
+
+        $result = [];
         foreach ($this->grid->getConfig()->getColumns() as $column) {
             $name = $column->getName();
             if (isset($fromCookie[$name])) {
-                $res[$name] = (boolean)$fromCookie[$name];
+                $result[$name] = (bool) $fromCookie[$name];
             } else {
-                $res[$name] = !in_array($name, $this->getHiddenByDefault());
+                $result[$name] = !in_array($name, $this->getHiddenByDefault());
             }
         }
 
-        return $res;
+        return $result;
     }
 
     /**
-     * @param $name
      * @return string
      */
     public function getId($name)
@@ -71,6 +73,7 @@ class ColumnsHider extends RenderableComponent
         if ($name) {
             $name = "-$name";
         }
+
         $gridName = $this->grid->getConfig()->getName();
 
         return "{$gridName}-columns_hider{$name}";
@@ -85,7 +88,6 @@ class ColumnsHider extends RenderableComponent
     }
 
     /**
-     * @param $title
      * @return $this
      */
     public function setTitle($title)
@@ -98,6 +100,7 @@ class ColumnsHider extends RenderableComponent
     public function prepare()
     {
         parent::prepare();
+
         $visible = $this->getColumnsVisibility();
         foreach ($this->grid->getConfig()->getColumns() as $column) {
             if (!$visible[$column->getName()]) {

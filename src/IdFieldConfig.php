@@ -1,11 +1,13 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 /**
  * Class IdFieldConfig
  *
  * IdFieldConfig is a column type that will render a row number in table rows.
- *
- * @package Nayjest\Grids
  */
 class IdFieldConfig extends FieldConfig
 {
@@ -20,7 +22,6 @@ class IdFieldConfig extends FieldConfig
     /**
      * Returns row id (row number).
      *
-     * @param DataRowInterface $row
      * @return int
      */
     public function getValue(DataRowInterface $row)

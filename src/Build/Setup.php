@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Build;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Build;
 
 use Closure;
 use Illuminate\Support\Facades\DB;
@@ -8,9 +12,9 @@ use Nayjest\Builder\BlueprintsCollection;
 use Nayjest\Builder\Builder;
 use Nayjest\Builder\Env;
 use Nayjest\Builder\Instructions\Base\Instruction;
+use Nayjest\Builder\Instructions\CustomInstruction;
 use Nayjest\Builder\Instructions\Mapping\Build;
 use Nayjest\Builder\Instructions\Mapping\BuildChildren;
-use Nayjest\Builder\Instructions\CustomInstruction;
 use Nayjest\Builder\Instructions\Mapping\CallMethodWith;
 use Nayjest\Builder\Instructions\Mapping\CustomMapping;
 use Nayjest\Builder\Instructions\Mapping\Rename;
@@ -28,13 +32,15 @@ use Nayjest\Grids\EloquentDataProvider;
  * @See \Grids::make
  *
  * @internal
- * @package Nayjest\Grids\Build
  */
 class Setup
 {
     const COLUMN_CLASS = 'Nayjest\Grids\FieldConfig';
+
     const COMPONENT_CLASS = 'Nayjest\Grids\Components\Base\ComponentInterface';
+
     const GRID_CLASS = 'Nayjest\Grids\GridConfig';
+
     const FILTER_CLASS = 'Nayjest\Grids\FilterConfig';
 
     /**
@@ -133,10 +139,10 @@ class Setup
                 if (strpos($type, '\\') !== false) {
                     $scaffold->class = $type;
                 } else {
-                    $scaffold->class = 'Nayjest\Grids\Components\\' . str_replace(
+                    $scaffold->class = 'Nayjest\Grids\Components\\'.str_replace(
                         ' ',
                         '',
-                        ucwords(str_replace(array('-', '_'), ' ', $type))
+                        ucwords(str_replace(['-', '_'], ' ', $type))
                     );
                 }
             }, null, Instruction::PHASE_PRE_INST),

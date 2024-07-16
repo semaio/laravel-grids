@@ -26,7 +26,7 @@
                     <b>Show/Hide all</b>
                 </label>
             </li>
-            <?php foreach ($columns as $column):
+            <?php foreach ($columns as $column) {
                 /** @var Nayjest\Grids\FieldConfig $column */
                 ?>
                 <li>
@@ -35,7 +35,7 @@
                     <?= $column->getLabel() ?>
                 </label>
             </li>
-            <?php endforeach ?>
+            <?php } ?>
         </ul>
     </div>
 </span>
@@ -107,7 +107,7 @@
         ColumnHider.prototype.getValues = function () {
             var json;
             if (!this.values) {
-                if (json = cookie.get('<?=$component->getId('cookie')?>')) {
+                if (json = cookie.get('<?= $component->getId('cookie')?>')) {
                     this.values = JSON.parse(json);
                 } else {
                     this.values = this.defaultValues;
@@ -132,7 +132,7 @@
 
         ColumnHider.prototype.saveValues = function () {
             cookie.set(
-                '<?=$component->getId('cookie')?>',
+                '<?= $component->getId('cookie')?>',
                 JSON.stringify(this.getValues()),
                 {path: '/'}
             );

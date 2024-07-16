@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 use Nayjest\Builder\Env;
 use Nayjest\Grids\Build\Setup;
@@ -7,8 +11,6 @@ use Nayjest\Grids\Build\Setup;
  * Class Grids
  *
  * Facade for constructing grids using configurations.
- *
- * @package Nayjest\Grids
  */
 class Grids
 {
@@ -32,7 +34,6 @@ class Grids
     /**
      * Creates grid using configuration.
      *
-     * @param array $config
      * @return Grid
      */
     public static function make(array $config)

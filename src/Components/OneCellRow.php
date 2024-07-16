@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableRegistry;
 
@@ -16,7 +20,7 @@ class OneCellRow extends RenderableRegistry
         $closing = '</td></tr>';
 
         return $this->wrapWithOutsideComponents(
-            $opening . $this->renderInnerComponents() . $closing
+            $opening.$this->renderInnerComponents().$closing
         );
     }
 }

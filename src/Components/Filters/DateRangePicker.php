@@ -1,6 +1,12 @@
-<?php namespace Nayjest\Grids\Components\Filters;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components\Filters;
 
 use Carbon\Carbon;
+use Closure;
+use Exception;
 use Nayjest\Grids\Components\Filter;
 use Nayjest\Grids\DataProvider;
 
@@ -12,8 +18,6 @@ use Nayjest\Grids\DataProvider;
  *
  * This component does not includes javascript & styles required to work with bootstrap-daterangepicker.
  * You need to include it manually to your pages/layout.
- *
- * @package Nayjest\Grids\Components\Filters
  */
 class DateRangePicker extends Filter
 {
@@ -50,7 +54,7 @@ class DateRangePicker extends Filter
      *
      * @see https://github.com/dangrossman/bootstrap-daterangepicker#options
      *
-     * @param array $options
+     * @param  array  $options
      */
     public function setJsOptions($options)
     {
@@ -73,7 +77,7 @@ class DateRangePicker extends Filter
     /**
      * Allows to submit form immediately when filter value selected.
      *
-     * @param bool $isSubmittedOnChange
+     * @param  bool  $isSubmittedOnChange
      * @return $this
      */
     public function setSubmittedOnChange($isSubmittedOnChange)
@@ -90,13 +94,13 @@ class DateRangePicker extends Filter
     {
         $startInput = $this->grid
             ->getInputProcessor()
-            ->getFilterValue($this->name . '_start');
+            ->getFilterValue($this->name.'_start');
 
         if ($startInput === null) {
             return $this->getDefaultStartValue();
-        } else {
-            return $startInput;
         }
+
+        return $startInput;
     }
 
     /**
@@ -106,12 +110,12 @@ class DateRangePicker extends Filter
     {
         $endInput = $this->grid
             ->getInputProcessor()
-            ->getFilterValue($this->name . '_end');
+            ->getFilterValue($this->name.'_end');
         if ($endInput === null) {
             return $this->getDefaultEndValue();
-        } else {
-            return $endInput;
         }
+
+        return $endInput;
     }
 
     /**
@@ -119,7 +123,10 @@ class DateRangePicker extends Filter
      */
     public function getValue()
     {
-        return [$this->getStartValue(), $this->getEndValue()];
+        return [
+            $this->getStartValue(),
+            $this->getEndValue(),
+        ];
     }
 
     /**
@@ -129,7 +136,12 @@ class DateRangePicker extends Filter
      */
     protected function hasValue()
     {
-        list($start, $end) = $this->getValue();
+        $value = $this->getValue();
+        if (!is_array($value)) {
+            return false;
+        }
+
+        [$start, $end] = $this->getValue();
 
         return $start !== null && $start !== '' && $end !== null && $end !== '';
     }
@@ -142,38 +154,40 @@ class DateRangePicker extends Filter
      * @see https://github.com/dangrossman/bootstrap-daterangepicker#options
      *
      * @return array
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     protected function getDefaultJsOptions()
     {
         $carbon = new Carbon();
         $previousMonth = Carbon::now()->startOfMonth()->subWeek();
         $today = Carbon::now();
-        $res = [
+
+        $result = [
             'format' => 'YYYY-MM-DD',
             'ranges' => [
                 'previous_month' => [
-                    'Previous month (' . $previousMonth->format('F') . ')',
+                    'Previous month ('.$previousMonth->format('F').')',
                     [
                         $previousMonth->startOfMonth()->format('Y-m-d'),
                         $previousMonth->endOfMonth()->format('Y-m-d'),
                     ],
                 ],
-                'current_month'  => [
-                    'Cur. month (' . date('F') . ')',
+                'current_month' => [
+                    'Cur. month ('.date('F').')',
                     [
                         $carbon->startOfMonth()->format('Y-m-d'),
                         $carbon->endOfMonth()->format('Y-m-d'),
                     ],
                 ],
-                'last_week'      => [
+                'last_week' => [
                     'This Week',
                     [
                         $carbon->startOfWeek()->format('Y-m-d'),
                         $carbon->endOfWeek()->format('Y-m-d'),
                     ],
                 ],
-                'last_14'        => [
+                'last_14' => [
                     'Last 14 days',
                     [
                         Carbon::now()->subDays(13)->format('Y-m-d'),
@@ -183,15 +197,17 @@ class DateRangePicker extends Filter
 
             ],
         ];
+
         // will not set dates when '' passed but set default date when null passed
         if ($this->getStartValue()) {
-            $res['startDate'] = $this->getStartValue();
-        }
-        if ($this->getEndValue()) {
-            $res['endDate'] = $this->getEndValue();
+            $result['startDate'] = $this->getStartValue();
         }
 
-        return $res;
+        if ($this->getEndValue()) {
+            $result['endDate'] = $this->getEndValue();
+        }
+
+        return $result;
     }
 
     /**
@@ -244,7 +260,7 @@ class DateRangePicker extends Filter
     }
 
     /**
-     * @return callable|\Closure
+     * @return callable|Closure
      */
     public function getFilteringFunc()
     {
@@ -256,7 +272,7 @@ class DateRangePicker extends Filter
     }
 
     /**
-     * @return \Closure
+     * @return Closure
      */
     protected function getDefaultFilteringFunc()
     {

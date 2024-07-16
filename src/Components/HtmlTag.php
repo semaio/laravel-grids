@@ -1,6 +1,11 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableRegistry;
+use Spatie\Html\Html;
 
 class HtmlTag extends RenderableRegistry
 {
@@ -36,7 +41,7 @@ class HtmlTag extends RenderableRegistry
     /**
      * Allows to specify HTML tag.
      *
-     * @param string $name
+     * @param  string  $name
      * @return $this
      */
     public function setTagName($name)
@@ -73,7 +78,7 @@ class HtmlTag extends RenderableRegistry
     /**
      * Sets content (html inside tag).
      *
-     * @param string $content
+     * @param  string  $content
      * @return $this
      */
     public function setContent($content)
@@ -97,7 +102,6 @@ class HtmlTag extends RenderableRegistry
      * Sets html tag attributes.
      * Keys are attribute names and values are attribute values.
      *
-     * @param array $attributes
      * @return $this
      */
     public function setAttributes(array $attributes = [])
@@ -125,13 +129,7 @@ class HtmlTag extends RenderableRegistry
      */
     public function renderOpeningTag()
     {
-        /** @var \Collective\Html\HtmlBuilder $html */
-        $html = app('html');
-
-        return '<'
-            . $this->getTagName()
-            . $html->attributes($this->getAttributes())
-            . '>';
+        return '<'.$this->getTagName().$this->attributes($this->getAttributes()).'>';
     }
 
     /**
@@ -154,13 +152,66 @@ class HtmlTag extends RenderableRegistry
         } else {
             $this->isRendered = true;
             $inner = $this->renderOpeningTag()
-                . $this->renderComponents(self::SECTION_BEGIN)
-                . $this->getContent()
-                . $this->renderComponents(null)
-                . $this->renderComponents(self::SECTION_END)
-                . $this->renderClosingTag();
+                .$this->renderComponents(self::SECTION_BEGIN)
+                .$this->getContent()
+                .$this->renderComponents(null)
+                .$this->renderComponents(self::SECTION_END)
+                .$this->renderClosingTag();
         }
 
         return $this->wrapWithOutsideComponents($inner);
+    }
+
+    /**
+     * Build an HTML attribute string from an array.
+     *
+     * @param  array  $attributes
+     * @return string
+     */
+    public function attributes($attributes)
+    {
+        $html = [];
+
+        foreach ((array) $attributes as $key => $value) {
+            $element = $this->attributeElement($key, $value);
+
+            if (!is_null($element)) {
+                $html[] = $element;
+            }
+        }
+
+        return count($html) > 0 ? ' '.implode(' ', $html) : '';
+    }
+
+    /**
+     * Build a single attribute element.
+     *
+     * @param  string  $key
+     * @param  string  $value
+     * @return string
+     */
+    protected function attributeElement($key, $value)
+    {
+        // For numeric keys we will assume that the value is a boolean attribute
+        // where the presence of the attribute represents a true value and the
+        // absence represents a false value.
+        // This will convert HTML attributes such as "required" to a correct
+        // form instead of using incorrect numerics.
+        if (is_numeric($key)) {
+            return $value;
+        }
+
+        // Treat boolean attributes as HTML properties
+        if (is_bool($value) && $key !== 'value') {
+            return $value ? $key : '';
+        }
+
+        if (is_array($value) && $key === 'class') {
+            return 'class="'.implode(' ', $value).'"';
+        }
+
+        if (!is_null($value)) {
+            return $key.'="'.e($value, false).'"';
+        }
     }
 }

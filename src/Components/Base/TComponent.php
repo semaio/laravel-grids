@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components\Base;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components\Base;
 
 use Nayjest\Grids\Grid;
 
@@ -7,8 +11,7 @@ use Nayjest\Grids\Grid;
  *
  * ComponentInterface interface implementation.
  *
- * @see     Nayjest\Grids\Components\Base\ComponentInterface
- * @package Nayjest\Grids\Components\Base
+ * @see ComponentInterface
  */
 trait TComponent
 {
@@ -32,7 +35,6 @@ trait TComponent
     /**
      * Attaches component to registry.
      *
-     * @param RegistryInterface $parent
      * @return null
      */
     public function attachTo(RegistryInterface $parent)
@@ -53,7 +55,6 @@ trait TComponent
     /**
      * Initializes component with grid.
      *
-     * @param Grid $grid
      * @return null
      */
     public function initialize(Grid $grid)
@@ -77,7 +78,7 @@ trait TComponent
     /**
      * Sets component name.
      *
-     * @param string $name
+     * @param  string  $name
      * @return $this
      */
     public function setName($name)

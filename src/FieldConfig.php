@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 use Illuminate\Support\Collection;
 
@@ -6,8 +10,6 @@ use Illuminate\Support\Collection;
  * Class FieldConfig
  *
  * This class describes grid column.
- *
- * @package Nayjest\Grids
  */
 class FieldConfig
 {
@@ -66,8 +68,8 @@ class FieldConfig
     /**
      * Constructor.
      *
-     * @param string|null $name  column unique name for internal usage
-     * @param string|null $label column label
+     * @param  string|null  $name  column unique name for internal usage
+     * @param  string|null  $label  column label
      */
     public function __construct($name = null, $label = null)
     {
@@ -96,7 +98,6 @@ class FieldConfig
      *
      * This property used to to identify column position in grid.
      *
-     * @param $order
      * @return $this
      */
     public function setOrder($order)
@@ -119,7 +120,7 @@ class FieldConfig
     /**
      * Sets field name.
      *
-     * @param string $name
+     * @param  string  $name
      * @return $this
      */
     public function setName($name)
@@ -170,13 +171,13 @@ class FieldConfig
      */
     public function getLabel()
     {
-        return $this->label ?: ucwords(str_replace(array('-', '_', '.'), ' ', $this->name));
+        return $this->label ?: ucwords(str_replace(['-', '_', '.'], ' ', $this->name));
     }
 
     /**
      * Sets text label that will be rendered in table header.
      *
-     * @param string $label
+     * @param  string  $label
      * @return $this
      */
     public function setLabel($label)
@@ -199,7 +200,7 @@ class FieldConfig
     /**
      * Allows to enable or disable sorting controls for column.
      *
-     * @param boolean $isSortable
+     * @param  bool  $isSortable
      * @return $this
      */
     public function setSortable($isSortable)
@@ -223,7 +224,7 @@ class FieldConfig
     /**
      * Allows to specify sorting by this column for data rows.
      *
-     * @param null|string $sortOrder null|Grid::SORT_ASC|Grid::SORT_DESC
+     * @param  null|string  $sortOrder  null|Grid::SORT_ASC|Grid::SORT_DESC
      * @return $this
      */
     public function setSorting($sortOrder)
@@ -257,7 +258,7 @@ class FieldConfig
      * Allows to set callback function that will render
      * content of table cells for this column.
      *
-     * @param callable $callback
+     * @param  callable  $callback
      * @return $this
      */
     public function setCallback($callback)
@@ -281,7 +282,7 @@ class FieldConfig
     /**
      * Allows to specify filtering controls for column.
      *
-     * @param Collection|FilterConfig[] $filters
+     * @param  Collection|FilterConfig[]  $filters
      * @return $this
      */
     public function setFilters($filters)
@@ -297,7 +298,6 @@ class FieldConfig
     /**
      * Allows to add filtering control to column.
      *
-     * @param FilterConfig $filter
      * @return $this
      */
     public function addFilter(FilterConfig $filter)
@@ -312,7 +312,7 @@ class FieldConfig
      * Creates instance of filtering control configuration
      * and binds it to the column.
      *
-     * @param string $class
+     * @param  string  $class
      * @return FilterConfig
      */
     public function makeFilter($class = '\Nayjest\Grids\FilterConfig')
@@ -340,7 +340,7 @@ class FieldConfig
      */
     public function getFilters()
     {
-        if (null === $this->filters) {
+        if ($this->filters === null) {
             $this->filters = new Collection();
         }
 
@@ -349,7 +349,7 @@ class FieldConfig
 
     /**
      * @todo move to Field instance
-     * @param DataRowInterface $row
+     *
      * @return mixed
      */
     public function getValue(DataRowInterface $row)
@@ -370,7 +370,7 @@ class FieldConfig
     }
 
     /**
-     * @param array $cellHtmlAttributes
+     * @param  array  $cellHtmlAttributes
      * @return FieldConfig
      */
     public function setCellHtmlAttributes($cellHtmlAttributes)

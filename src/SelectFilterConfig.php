@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 class SelectFilterConfig extends FilterConfig
 {
@@ -27,7 +31,6 @@ class SelectFilterConfig extends FilterConfig
     /**
      * Sets option items for html select tag.
      *
-     * @param array $options
      *
      * @return $this
      */
@@ -52,8 +55,7 @@ class SelectFilterConfig extends FilterConfig
     /**
      * Allows to submit form immediately when filter value selected.
      *
-     * @param bool $isSubmittedOnChange
-     *
+     * @param  bool  $isSubmittedOnChange
      * @return $this
      */
     public function setSubmittedOnChange($isSubmittedOnChange)
@@ -66,8 +68,7 @@ class SelectFilterConfig extends FilterConfig
     /**
      * Sets the size of the select element.
      *
-     * @param int $size
-     *
+     * @param  int  $size
      * @return $this
      */
     public function setSize($size)
@@ -91,7 +92,6 @@ class SelectFilterConfig extends FilterConfig
      * Enabled multiple mode.
      * This will switch the selected operator to IN, as any other operator does not work with multiple selections.
      *
-     * @param $multipleMode
      *
      * @return $this
      */
@@ -119,7 +119,7 @@ class SelectFilterConfig extends FilterConfig
     /**
      * Returns if the "--//--" option with no value is hidden
      *
-     * @return boolean
+     * @return bool
      */
     public function isNoneOptionHidden()
     {
@@ -129,7 +129,7 @@ class SelectFilterConfig extends FilterConfig
     /**
      * Enable/disable hiding of the "--//--" option with no value
      *
-     * @param boolean $hideNoneOption
+     * @param  bool  $hideNoneOption
      * @return $this
      */
     public function setHideNoneOption($hideNoneOption)

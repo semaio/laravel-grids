@@ -1,11 +1,13 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 /**
  * Class Sorter
  *
  * Data sorting manager.
- *
- * @package Nayjest\Grids
  */
 class Sorter
 {
@@ -16,8 +18,6 @@ class Sorter
 
     /**
      * Constructor.
-     *
-     * @param Grid $grid
      */
     public function __construct(Grid $grid)
     {
@@ -27,8 +27,6 @@ class Sorter
     /**
      * Returns URL for sorting control.
      *
-     * @param FieldConfig $column
-     * @param             $direction
      * @return string
      */
     public function link(FieldConfig $column, $direction)

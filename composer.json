@@ -8,9 +8,7 @@
         "laravel",
         "database",
         "eloquent",
-        "bootstrap",
-        "laravel-5",
-        "laravel5"
+        "bootstrap"
     ],
     "homepage": "https://github.com/semaio/laravel-grids",
     "type": "library",
@@ -28,12 +26,9 @@
         }
     ],
     "require": {
-        "php": "^7.2|^8.0|^8.1|^8.2|^8.3",
-        "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+        "php": "^8.2",
+        "illuminate/support": "^11.0",
         "nayjest/builder": "~2"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^8.5"
     },
     "suggest": {
         "maatwebsite/excel": "Required to work with Excel export component"
@@ -54,5 +49,8 @@
         "source": "https://github.com/semaio/laravel-grids",
         "issues": "https://github.com/semaio/laravel-grids/issues"
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "require-dev": {
+        "laravel/pint": "dev-main"
+    }
 }

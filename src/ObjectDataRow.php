@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 use Exception;
 use RuntimeException;
@@ -6,8 +10,9 @@ use RuntimeException;
 class ObjectDataRow extends DataRow
 {
     /**
-     * @param string $fieldName
+     * @param  string  $fieldName
      * @return mixed
+     *
      * @throws Exception
      */
     protected function extractCellValue($fieldName)

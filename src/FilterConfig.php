@@ -1,16 +1,29 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 class FilterConfig
 {
     const OPERATOR_LIKE = 'like';
+
     const OPERATOR_LIKE_L = 'like_l';
+
     const OPERATOR_LIKE_R = 'like_r';
+
     const OPERATOR_EQ = 'eq';
+
     const OPERATOR_NOT_EQ = 'n_eq';
+
     const OPERATOR_GT = 'gt';
+
     const OPERATOR_LS = 'lt';
+
     const OPERATOR_LSE = 'ls_e';
+
     const OPERATOR_GTE = 'gt_e';
+
     const OPERATOR_IN = 'in';
 
     /**
@@ -71,7 +84,7 @@ class FilterConfig
     }
 
     /**
-     * @param callable $func ($value, $data_provider)
+     * @param  callable  $func  ($value, $data_provider)
      * @return $this
      */
     public function setFilteringFunc($func)
@@ -110,7 +123,7 @@ class FilterConfig
 
     public function getName()
     {
-        if (null === $this->name && $this->column) {
+        if ($this->name === null && $this->column) {
             $this->name = $this->column->getName();
         }
 
@@ -131,6 +144,6 @@ class FilterConfig
 
     public function getId()
     {
-        return $this->getName() . '-' . $this->getOperator();
+        return $this->getName().'-'.$this->getOperator();
     }
 }

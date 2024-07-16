@@ -7,10 +7,10 @@ use Nayjest\Grids\Components\TotalsRow;
 
 ?>
 <tr>
-    <?php foreach ($columns as $column): ?>
+    <?php foreach ($columns as $column) { ?>
         <td class="column-<?= $column->getName() ?>" <?= $column->isHidden() ? 'style="display:none"' : '' ?>>
             <?php
-            if ($component->uses($column)):
+            if ($component->uses($column)) {
                 $label = '';
                 switch ($component->getFieldOperation($column->getName())) {
                     case \Nayjest\Grids\Components\TotalsRow::OPERATION_SUM:
@@ -24,8 +24,8 @@ use Nayjest\Grids\Components\TotalsRow;
                         break;
                 }
                 echo $label, '&nbsp;', $column->getValue($component);
-            endif;
-            ?>
+            }
+        ?>
         </td>
-    <?php endforeach ?>
+    <?php } ?>
 </tr>

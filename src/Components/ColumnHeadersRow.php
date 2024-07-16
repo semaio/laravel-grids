@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Grid;
 
@@ -6,8 +10,6 @@ use Nayjest\Grids\Grid;
  * Class ColumnHeadersRow
  *
  * The component for rendering table row with column headers.
- *
- * @package Nayjest\Grids\Components
  */
 class ColumnHeadersRow extends HtmlTag
 {
@@ -16,7 +18,6 @@ class ColumnHeadersRow extends HtmlTag
     /**
      * Initializes component with grid
      *
-     * @param Grid $grid
      * @return null
      */
     public function initialize(Grid $grid)
@@ -27,10 +28,8 @@ class ColumnHeadersRow extends HtmlTag
 
     /**
      * Creates children components for rendering column headers.
-     *
-     * @param Grid $grid
      */
-    protected function createHeaders(Grid $grid)
+    protected function createHeaders(Grid $grid): void
     {
         foreach ($grid->getConfig()->getColumns() as $column) {
             $this->addComponent(new ColumnHeader($column));

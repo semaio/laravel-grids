@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\FieldConfig;
 
@@ -6,20 +10,18 @@ use Nayjest\Grids\FieldConfig;
  * Class ColumnHeader
  *
  * The component for rendering column header
- *
- * @package Nayjest\Grids\Components
  */
 class ColumnHeader extends TableCell
 {
     protected $tagName = 'th';
 
     /**
-     * @param FieldConfig $column
      * @return $this
      */
     public function setColumn(FieldConfig $column)
     {
         $this->setContent($column->getLabel());
+
         if ($column->isSortable()) {
             $this->addComponent(new SortingControl($column));
         }

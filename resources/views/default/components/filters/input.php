@@ -1,9 +1,9 @@
 <?php
 /** @var Nayjest\Grids\Components\Filter $component */
 ?>
-<?php if ($component->getLabel()): ?>
+<?php if ($component->getLabel()) { ?>
     <span><?= $component->getLabel() ?></span>
-<?php endif ?>
+<?php } ?>
 <input
         class="form-control input-sm"
         style="display: inline; width: 80px; margin-right: 10px"

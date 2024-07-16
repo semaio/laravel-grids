@@ -13,11 +13,11 @@ if (method_exists($cfg, 'isSubmittedOnChange') && $cfg->isSubmittedOnChange()) {
 ?>
 <select class="form-control input-sm" name="<?= $filter->getInputName() ?><?= $cfg->isMultipleMode() ? '[]' : '' ?>"
     <?= $onchange ?>
-    <?= ($size = $cfg->getSize()) ? 'size="' . $size . '"' : '' ?>
+    <?= ($size = $cfg->getSize()) ? 'size="'.$size.'"' : '' ?>
     <?= ($cfg->isMultipleMode()) ? 'multiple="multiple"' : '' ?>
 >
     <?= ($cfg->isMultipleMode() || $cfg->isNoneOptionHidden()) ? '' : '<option value="">--//--</option>' ?>
-    <?php foreach ($filter->getConfig()->getOptions() as $value => $label): ?>
+    <?php foreach ($filter->getConfig()->getOptions() as $value => $label) { ?>
         <?php
         $maybe_selected = (
             (
@@ -31,5 +31,5 @@ if (method_exists($cfg, 'isSubmittedOnChange') && $cfg->isSubmittedOnChange()) {
         <option <?= $maybe_selected ?> value="<?= $value ?>">
             <?= $label ?>
         </option>
-    <?php endforeach ?>
+    <?php } ?>
 </select>

@@ -1,25 +1,25 @@
-<?php namespace Nayjest\Grids;
+<?php
 
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
+
+use App;
+use ArrayIterator;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
-use Doctrine\DBAL\Query\QueryBuilder;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Collection;
+use PDO;
 
 class DbalDataProvider extends DataProvider
 {
-    /**
-     * @var
-     */
     protected $collection;
 
-    /**
-     * @var
-     */
     protected $paginator;
 
     /**
-     * @var \ArrayIterator
+     * @var ArrayIterator
      */
     protected $iterator;
 
@@ -33,8 +33,6 @@ class DbalDataProvider extends DataProvider
 
     /**
      * Constructor.
-     *
-     * @param QueryBuilder $src
      */
     public function __construct(QueryBuilder $src)
     {
@@ -67,7 +65,7 @@ class DbalDataProvider extends DataProvider
             if ($this->isExecUsingLaravel()) {
                 $res = DB::select($query, $query->getParameters());
             } else {
-                $res = $query->execute()->fetchAll(\PDO::FETCH_OBJ);
+                $res = $query->execute()->fetchAll(PDO::FETCH_OBJ);
             }
             $this->collection = Collection::make($res);
         }
@@ -101,11 +99,11 @@ class DbalDataProvider extends DataProvider
      */
     public function getPaginationFactory()
     {
-        return \App::make('paginator');
+        return App::make('paginator');
     }
 
     /**
-     * @return \ArrayIterator
+     * @return ArrayIterator
      */
     protected function getIterator()
     {
@@ -144,6 +142,7 @@ class DbalDataProvider extends DataProvider
 
     /**
      * @deprecated
+     *
      * @return int
      */
     public function count()
@@ -168,8 +167,8 @@ class DbalDataProvider extends DataProvider
     }
 
     /**
-     * @param string $fieldName
-     * @param string $direction
+     * @param  string  $fieldName
+     * @param  string  $direction
      * @return $this|DataProvider
      */
     public function orderBy($fieldName, $direction)
@@ -180,9 +179,9 @@ class DbalDataProvider extends DataProvider
     }
 
     /**
-     * @param string $fieldName
-     * @param string $operator
-     * @param mixed  $value
+     * @param  string  $fieldName
+     * @param  string  $operator
+     * @param  mixed  $value
      * @return $this|DataProvider
      */
     public function filter($fieldName, $operator, $value)
@@ -228,7 +227,7 @@ class DbalDataProvider extends DataProvider
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isExecUsingLaravel()
     {
@@ -236,7 +235,7 @@ class DbalDataProvider extends DataProvider
     }
 
     /**
-     * @param boolean $execUsingLaravel
+     * @param  bool  $execUsingLaravel
      */
     public function setExecUsingLaravel($execUsingLaravel)
     {

@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\Components\Base\RenderableComponent;
 
@@ -6,8 +10,6 @@ use Nayjest\Grids\Components\Base\RenderableComponent;
  * Class RenderFunc
  *
  * The component prints value returned by specified PHP function.
- *
- * @package Nayjest\Grids\Components
  */
 class RenderFunc extends RenderableComponent
 {
@@ -17,7 +19,7 @@ class RenderFunc extends RenderableComponent
     protected $func;
 
     /**
-     * @param null|callable $func
+     * @param  null|callable  $func
      */
     public function __construct($func = null)
     {
@@ -27,7 +29,7 @@ class RenderFunc extends RenderableComponent
     }
 
     /**
-     * @param callable $func
+     * @param  callable  $func
      */
     public function setFunc($func)
     {

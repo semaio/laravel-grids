@@ -1,18 +1,22 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 use Illuminate\Support\Collection;
+use Nayjest\Grids\Components\Base\RegistryInterface;
 use Nayjest\Grids\Components\Base\RenderableComponentInterface;
 use Nayjest\Grids\Components\Base\TComponent;
 use Nayjest\Grids\Components\Base\TRegistry;
-use Nayjest\Grids\Components\Base\RegistryInterface;
 use Nayjest\Grids\Components\TFoot;
 use Nayjest\Grids\Components\THead;
 use Nayjest\Grids\Components\Tr;
 
 class GridConfig implements RegistryInterface
 {
-    use TRegistry;
     use TComponent;
+    use TRegistry;
 
     const SECTION_DO_NOT_RENDER = 'not_render';
 
@@ -61,7 +65,6 @@ class GridConfig implements RegistryInterface
     }
 
     /**
-     * @param RenderableComponentInterface $rowComponent
      * @return $this
      */
     public function setRowComponent(RenderableComponentInterface $rowComponent)
@@ -88,7 +91,7 @@ class GridConfig implements RegistryInterface
     }
 
     /**
-     * @param string $template
+     * @param  string  $template
      * @return $this
      */
     public function setTemplate($template)
@@ -111,7 +114,7 @@ class GridConfig implements RegistryInterface
     }
 
     /**
-     * @param Collection|FilterConfig[] $filters
+     * @param  Collection|FilterConfig[]  $filters
      * @return $this
      */
     public function setFilters($filters)
@@ -123,7 +126,7 @@ class GridConfig implements RegistryInterface
 
     public function getFilters()
     {
-        if (null === $this->filters) {
+        if ($this->filters === null) {
             $this->filters = new Collection();
         }
 
@@ -139,7 +142,6 @@ class GridConfig implements RegistryInterface
     }
 
     /**
-     * @param DataProvider $dataProvider
      * @return $this
      */
     public function setDataProvider(DataProvider $dataProvider)
@@ -158,7 +160,7 @@ class GridConfig implements RegistryInterface
     }
 
     /**
-     * @param FieldConfig[]|Collection $columns
+     * @param  FieldConfig[]|Collection  $columns
      * @return $this
      */
     public function setColumns($columns)
@@ -175,7 +177,7 @@ class GridConfig implements RegistryInterface
      */
     public function getColumns()
     {
-        if (null === $this->columns) {
+        if ($this->columns === null) {
             $this->columns = new Collection;
         }
 
@@ -185,7 +187,7 @@ class GridConfig implements RegistryInterface
     /**
      * Returns column by name.
      *
-     * @param string $name
+     * @param  string  $name
      * @return null|FieldConfig
      */
     public function getColumn($name)
@@ -210,7 +212,7 @@ class GridConfig implements RegistryInterface
     /**
      * Sets cache expiration time in seconds.
      *
-     * @param int $seconds
+     * @param  int  $seconds
      * @return $this
      */
     public function setCachingTime($seconds)
@@ -223,7 +225,6 @@ class GridConfig implements RegistryInterface
     /**
      * Adds column to grid.
      *
-     * @param FieldConfig $column
      * @return $this
      */
     public function addColumn(FieldConfig $column)
@@ -239,12 +240,12 @@ class GridConfig implements RegistryInterface
     /**
      * Sets maximal quantity of rows per page.
      *
-     * @param int $pageSize
+     * @param  int  $pageSize
      * @return $this
      */
     public function setPageSize($pageSize)
     {
-        $this->pageSize = (int)$pageSize;
+        $this->pageSize = (int) $pageSize;
 
         return $this;
     }

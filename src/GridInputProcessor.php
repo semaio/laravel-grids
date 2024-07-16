@@ -1,14 +1,15 @@
-<?php namespace Nayjest\Grids;
+<?php
 
-use Collective\Html\FormFacade as Form;
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
+
 use Illuminate\Support\Facades\Request;
 
 /**
  * Class GridInputProcessor
  *
  * This class manages input processing for grid.
- *
- * @package Nayjest\Grids
  */
 class GridInputProcessor
 {
@@ -24,8 +25,6 @@ class GridInputProcessor
 
     /**
      * Constructor.
-     *
-     * @param Grid $grid
      */
     public function __construct(Grid $grid)
     {
@@ -65,7 +64,7 @@ class GridInputProcessor
      */
     public function getSorting()
     {
-        return $_ =& $this->input['sort'];
+        return $_ = &$this->input['sort'];
     }
 
     public function getSortingHiddenInputsHtml()
@@ -75,7 +74,7 @@ class GridInputProcessor
         $key = $this->getKey();
         if (isset($this->input['sort'])) {
             foreach ($this->input['sort'] as $field => $direction) {
-                $html .= Form::hidden("{$key}[sort][$field]", $direction);
+                $html .= '<input type="hidden" name="'.$key.'[sort]['.$field.']" value="'.$direction.'" />';
             }
         }
 
@@ -94,16 +93,14 @@ class GridInputProcessor
         $cookiesString = '';
         foreach ($_COOKIE as $key => $val) {
             if (strpos($key, $this->getKey()) !== false) {
-                $cookiesString .= $key . json_encode($val);
+                $cookiesString .= $key.json_encode($val);
             }
         }
 
-        return md5($cookiesString . $this->getKey() . json_encode($this->getInput()));
+        return md5($cookiesString.$this->getKey().json_encode($this->getInput()));
     }
 
     /**
-     * @param FieldConfig $column
-     * @param             $direction
      * @return $this
      */
     public function setSorting(FieldConfig $column, $direction)
@@ -118,7 +115,7 @@ class GridInputProcessor
     /**
      * Returns input value for filter.
      *
-     * @param string $filterName
+     * @param  string  $filterName
      * @return mixed
      */
     public function getFilterValue($filterName)
@@ -133,8 +130,7 @@ class GridInputProcessor
     /**
      * Returns value of input parameter related to grid.
      *
-     * @param string $key
-     * @param        $default
+     * @param  string  $key
      * @return mixed
      */
     public function getValue($key, $default = null)
@@ -147,8 +143,8 @@ class GridInputProcessor
     }
 
     /**
-     * @param string $key
-     * @param mixed  $value
+     * @param  string  $key
+     * @param  mixed  $value
      * @return $this
      */
     public function setValue($key, $value)
@@ -161,7 +157,6 @@ class GridInputProcessor
     /**
      * Returns current query string extended by specified GET parameters.
      *
-     * @param array $newParams
      * @return string
      */
     public function getQueryString(array $newParams = [])
@@ -185,19 +180,18 @@ class GridInputProcessor
     /**
      * Returns current URL extended by specified GET parameters.
      *
-     * @param array $newParams
      * @return string
      */
     public function getUrl(array $newParams = [])
     {
         if (null !== $queryString = $this->getQueryString($newParams)) {
-            $queryString = '?' . $queryString;
+            $queryString = '?'.$queryString;
         }
         $request = Request::instance();
 
         return $request->getSchemeAndHttpHost()
-            . $request->getBaseUrl()
-            . $request->getPathInfo()
-            . $queryString;
+            .$request->getBaseUrl()
+            .$request->getPathInfo()
+            .$queryString;
     }
 }

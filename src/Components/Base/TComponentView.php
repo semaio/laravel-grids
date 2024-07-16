@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components\Base;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components\Base;
 
 trait TComponentView
 {
@@ -27,7 +31,7 @@ trait TComponentView
     {
         $gridTemplate = $this->grid->getConfig()->getTemplate();
 
-        return str_replace('*.', "$gridTemplate.", $this->template);
+        return str_replace('*.', "$gridTemplate.", (string) $this->template);
     }
 
     /**
@@ -45,7 +49,7 @@ trait TComponentView
      * Sets name of section in parent component
      * where this component must be rendered.
      *
-     * @param string|null $sectionName
+     * @param  string|null  $sectionName
      * @return $this
      */
     public function setRenderSection($sectionName)

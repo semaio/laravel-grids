@@ -1,11 +1,13 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 /**
  * Class THead
  *
  * The component for rendering THEAD html tag inside grid.
- *
- * @package Nayjest\Grids\Components
  */
 class THead extends HtmlTag
 {

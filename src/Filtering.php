@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 use Illuminate\Support\Collection;
 
@@ -6,8 +10,6 @@ use Illuminate\Support\Collection;
  * Class Filtering
  *
  * This class manages data filtering.
- *
- * @package Nayjest\Grids
  */
 class Filtering
 {
@@ -16,15 +18,10 @@ class Filtering
      */
     protected $grid;
 
-    /**
-     * @var
-     */
     protected $filters;
 
     /**
      * Constructor.
-     *
-     * @param Grid $grid
      */
     public function __construct(Grid $grid)
     {
@@ -86,7 +83,6 @@ class Filtering
     /**
      * Returns filter instance.
      *
-     * @param $idOrConfig
      * @return mixed|Filter
      */
     public function getFilter($idOrConfig)
@@ -101,7 +97,6 @@ class Filtering
     /**
      * Renders filtering control.
      *
-     * @param $filterIdOrConfig
      * @return string
      */
     public function render($filterIdOrConfig)

@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids;
 
 use Illuminate\Support\Facades\View;
 
@@ -16,10 +20,6 @@ class Filter
 
     /**
      * Constructor.
-     *
-     * @param FilterConfig $config
-     * @param FieldConfig  $column
-     * @param Grid         $grid
      */
     public function __construct(FilterConfig $config, FieldConfig $column, Grid $grid)
     {
@@ -103,7 +103,7 @@ class Filter
     public function apply()
     {
         $value = $this->getValue();
-        if (null === $value || '' === $value) {
+        if ($value === null || $value === '') {
             return;
         }
         if ($func = $this->config->getFilteringFunc()) {
@@ -126,9 +126,9 @@ class Filter
             }
             if (!$found) {
                 if ($operator === FilterConfig::OPERATOR_LIKE) {
-                    $value = '%' . $value . '%';
+                    $value = '%'.$value.'%';
                 } elseif ($operator === FilterConfig::OPERATOR_LIKE_L) {
-                    $value = '%' . $value;
+                    $value = '%'.$value;
                 } elseif ($operator === FilterConfig::OPERATOR_LIKE_R) {
                     $value .= '%';
                 }

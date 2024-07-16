@@ -1,4 +1,8 @@
-<?php namespace Nayjest\Grids\Components;
+<?php
+
+declare(strict_types=1);
+
+namespace Nayjest\Grids\Components;
 
 use Nayjest\Grids\FieldConfig;
 
@@ -6,8 +10,6 @@ use Nayjest\Grids\FieldConfig;
  * Class TableCell
  *
  * The component for rendering TD html tag inside grid.
- *
- * @package Nayjest\Grids\Components
  */
 class TableCell extends HtmlTag
 {
@@ -20,8 +22,6 @@ class TableCell extends HtmlTag
 
     /**
      * Constructor.
-     *
-     * @param FieldConfig $column
      */
     public function __construct(FieldConfig $column)
     {
@@ -34,11 +34,11 @@ class TableCell extends HtmlTag
     public function getAttributes()
     {
         if (empty($this->attributes['class'])) {
-            $this->attributes['class'] = 'column-' . $this->getColumn()->getName();
+            $this->attributes['class'] = 'column-'.$this->getColumn()->getName();
         }
         if ($this->getColumn()->getCellHtmlAttributes()) {
             foreach ($this->getColumn()->getCellHtmlAttributes() as $attribute => $value) {
-                $this->attributes[$attribute] .= (empty($this->attributes[$attribute]) ? '' : ' ') . $value;
+                $this->attributes[$attribute] .= (empty($this->attributes[$attribute]) ? '' : ' ').$value;
             }
         }
         if (empty($this->attributes['data-label'])) {
@@ -59,7 +59,7 @@ class TableCell extends HtmlTag
      */
     public function getName()
     {
-        return $this->name ?: 'column_' . $this->column->getName();
+        return $this->name ?: 'column_'.$this->column->getName();
     }
 
     /**
@@ -73,7 +73,6 @@ class TableCell extends HtmlTag
     }
 
     /**
-     * @param FieldConfig $column
      * @return $this
      */
     public function setColumn(FieldConfig $column)

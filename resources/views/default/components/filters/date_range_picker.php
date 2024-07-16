@@ -2,12 +2,12 @@
 /** @var Nayjest\Grids\Components\Filters\DateRangePicker $component */
 $id = uniqid();
 ?>
-<?php if ($component->getLabel()): ?>
+<?php if ($component->getLabel()) { ?>
     <span>
         <span class="glyphicon glyphicon-calendar"></span>
         <?= $component->getLabel() ?>
     </span>
-<?php endif ?>
+<?php } ?>
 <input
         class="form-control input-sm"
         style="display: inline; width: 165px; margin-right: 10px"
@@ -29,29 +29,29 @@ $id = uniqid();
             } else {
                 text = '';
             }
-            $('#<?=$id?>').val(text);
+            $('#<?= $id?>').val(text);
         };
         var onApplyDate = function (ev, picker) {
             var start = $('[name="<?= $component->getStartInputName() ?>"]');
             start.val(picker.startDate.format(options.format));
             var end = $('[name="<?= $component->getEndInputName() ?>"]');
             end.val(picker.endDate.format(options.format));
-            <?php if($component->isSubmittedOnChange()): ?>
+            <?php if ($component->isSubmittedOnChange()) { ?>
             end.get(0).form.submit();
-            <?php endif ?>
+            <?php } ?>
         };
         $('#<?= $id ?>')
             .daterangepicker(options, cb)
             .on('apply.daterangepicker', onApplyDate)
             .on('change', function () {
-                if (!$('#<?=$id?>').val()) {
+                if (!$('#<?= $id?>').val()) {
                     $('[name="<?= $component->getStartInputName() ?>"]').val('');
                     $('[name="<?= $component->getEndInputName() ?>"]').val('');
 
-                    <?php if($component->isSubmittedOnChange()): ?>
+                    <?php if ($component->isSubmittedOnChange()) { ?>
                     var end = $('[name="<?= $component->getEndInputName() ?>"]');
                     end.get(0).form.submit();
-                    <?php endif ?>
+                    <?php } ?>
                 }
             })
             .on('cancel.daterangepicker', function () {
