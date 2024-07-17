@@ -30,6 +30,9 @@
         "illuminate/support": "^11.0",
         "nayjest/builder": "~2"
     },
+    "require-dev": {
+        "laravel/pint": "^1.16"
+    },
     "suggest": {
         "maatwebsite/excel": "Required to work with Excel export component"
     },
@@ -49,8 +52,5 @@
         "source": "https://github.com/semaio/laravel-grids",
         "issues": "https://github.com/semaio/laravel-grids/issues"
     },
-    "minimum-stability": "dev",
-    "require-dev": {
-        "laravel/pint": "dev-main"
-    }
+    "minimum-stability": "stable"
 }
