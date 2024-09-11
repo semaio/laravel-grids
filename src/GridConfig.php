@@ -48,6 +48,8 @@ class GridConfig implements RegistryInterface
 
     protected $rowComponent;
 
+    protected $isResponsive = false;
+
     /**
      * @return RenderableComponentInterface
      */
@@ -232,6 +234,7 @@ class GridConfig implements RegistryInterface
         if ($this->columns === null) {
             $this->setColumns([]);
         }
+
         $this->columns->push($column);
 
         return $this;
@@ -258,5 +261,28 @@ class GridConfig implements RegistryInterface
     public function getPageSize()
     {
         return $this->pageSize;
+    }
+
+    /**
+     * Checks if table should be responsive.
+     *
+     * @return bool
+     */
+    public function isResponsive()
+    {
+        return $this->isResponsive;
+    }
+
+    /**
+     * Sets if table should be responsive.
+     *
+     * @param bool $isResponsive
+     * @return $this
+     */
+    public function setIsResponsive($isResponsive)
+    {
+        $this->isResponsive = $isResponsive;
+
+        return $this;
     }
 }
