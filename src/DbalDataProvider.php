@@ -67,7 +67,11 @@ class DbalDataProvider extends DataProvider
 
             if ($this->isExecUsingLaravel()) {
                 $res = DB::select($query, $query->getParameters());
+            } elseif ($this->isDbal3()) {
+                // for DBAL 3 use new executeQuery() method instead of deprecated execute()
+                $res = $query->executeQuery()->fetchAllAssociative();
             } else {
+                // for DBAL 2
                 $res = $query->execute()->fetchAll(PDO::FETCH_OBJ);
             }
             $this->collection = Collection::make($res);
@@ -134,7 +138,11 @@ class DbalDataProvider extends DataProvider
             $this->index++;
             $item = $this->iterator->current();
             $this->iterator->next();
-            $row = new ObjectDataRow($item, $this->getRowId());
+            if (is_array($item)) {
+                $row = new ArrayDataRow($item, $this->getRowId());
+            } else {
+                $row = new ObjectDataRow($item, $this->getRowId());
+            }
             Event::dispatch(self::EVENT_FETCH_ROW, [$row, $this]);
 
             return $row;
@@ -243,5 +251,15 @@ class DbalDataProvider extends DataProvider
     public function setExecUsingLaravel($execUsingLaravel)
     {
         $this->execUsingLaravel = $execUsingLaravel;
+    }
+
+    /**
+     * Checks if Doctrine DBAL 3 is used
+     *
+     * @return bool
+     */
+    private function isDbal3()
+    {
+        return class_exists('\Doctrine\DBAL\Result');
     }
 }
