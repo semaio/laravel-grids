@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.2.0 (2025-04-15)
+
+* Add support for Laravel 13
+* Add support for DBAL 3
+* Cleanup
+
 ## 5.1.0 (2025-04-23)
 
 * Add support for Laravel 12
