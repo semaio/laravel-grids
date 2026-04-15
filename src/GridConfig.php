@@ -82,7 +82,7 @@ class GridConfig implements RegistryInterface
      * Returns default child components.
      *
      *
-     * @return \Illuminate\Support\Collection|Components\Base\ComponentInterface[]|array
+     * @return Collection|Components\Base\ComponentInterface[]|array
      */
     protected function getDefaultComponents()
     {
@@ -129,7 +129,7 @@ class GridConfig implements RegistryInterface
     public function getFilters()
     {
         if ($this->filters === null) {
-            $this->filters = new Collection();
+            $this->filters = new Collection;
         }
 
         return $this->filters;
@@ -276,7 +276,7 @@ class GridConfig implements RegistryInterface
     /**
      * Sets if table should be responsive.
      *
-     * @param bool $isResponsive
+     * @param  bool  $isResponsive
      * @return $this
      */
     public function setIsResponsive($isResponsive)

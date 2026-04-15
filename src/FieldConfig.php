@@ -341,7 +341,7 @@ class FieldConfig
     public function getFilters()
     {
         if ($this->filters === null) {
-            $this->filters = new Collection();
+            $this->filters = new Collection;
         }
 
         return $this->filters;

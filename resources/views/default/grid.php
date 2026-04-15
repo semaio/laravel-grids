@@ -1,15 +1,19 @@
 <?php
+
+use Nayjest\Grids\DataProvider;
+use Nayjest\Grids\Grid;
+
 /**
- * @var Nayjest\Grids\DataProvider $data *
+ * @var DataProvider $data *
  */
 /**
- * @var Nayjest\Grids\Grid $grid *
+ * @var Grid $grid *
  */
 ?>
 <form>
-    <?php if ($grid->getConfig()->isResponsive()): ?>
+    <?php if ($grid->getConfig()->isResponsive()) { ?>
         <div class="table-responsive">
-    <?php endif; ?>
+    <?php } ?>
 
     <table class="table table-striped" id="<?= $grid->getConfig()->getName() ?>">
         <?= $grid->header() ? $grid->header()->render() : '' ?>
@@ -25,7 +29,7 @@
     <?php // Hidden input for submitting form by pressing enter if there are no other submits?>
     <input type="submit" style="display: none;"/>
 
-    <?php if ($grid->getConfig()->isResponsive()): ?>
+    <?php if ($grid->getConfig()->isResponsive()) { ?>
         </div>
-    <?php endif; ?>
+    <?php } ?>
 </form>

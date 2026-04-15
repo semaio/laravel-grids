@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Nayjest\Grids\Components\Base;
 
+use Illuminate\Support\Collection;
+
 /**
  * Class RenderableRegistry
  *
@@ -48,7 +50,7 @@ class RenderableRegistry implements RegistryInterface, RenderableComponentInterf
      * Returns components filtered by section name.
      *
      * @param  string  $sectionName
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function getSectionComponents($sectionName)
     {

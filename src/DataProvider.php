@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Nayjest\Grids;
 
+use Illuminate\Pagination\Factory;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+
 /**
  * Class DataProvider
  */
@@ -105,17 +109,17 @@ abstract class DataProvider
     /**
      * Returns collection of raw data items.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     abstract public function getCollection();
 
     /**
-     * @return \Illuminate\Pagination\Paginator
+     * @return Paginator
      */
     abstract public function getPaginator();
 
     /**
-     * @return \Illuminate\Pagination\Factory
+     * @return Factory
      */
     abstract public function getPaginationFactory();
 

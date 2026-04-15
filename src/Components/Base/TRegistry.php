@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nayjest\Grids\Components\Base;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Contracts\ArrayableInterface;
 use Nayjest\Grids\Grid;
 
 trait TRegistry
@@ -16,7 +17,7 @@ trait TRegistry
      *
      * Override this method.
      *
-     * @return \Illuminate\Support\Collection|ComponentInterface[]|array
+     * @return Collection|ComponentInterface[]|array
      */
     protected function getDefaultComponents()
     {
@@ -103,7 +104,7 @@ trait TRegistry
     /**
      * Allows to specify collection of child components.
      *
-     * @param  \Illuminate\Support\Collection|ComponentInterface[]|array  $components
+     * @param  Collection|ComponentInterface[]|array  $components
      * @return $this
      */
     public function setComponents($components)
@@ -119,7 +120,7 @@ trait TRegistry
     /**
      * Adds set of components to the collection of child components.
      *
-     * @param  Collection|\Illuminate\Support\Contracts\ArrayableInterface|array  $components
+     * @param  Collection|ArrayableInterface|array  $components
      * @return $this
      */
     public function addComponents($components)

@@ -1,7 +1,11 @@
-<?php // ========== FILTERS ROW ==========
+<?php
+use Nayjest\Grids\Components\FiltersRow;
+use Nayjest\Grids\FieldConfig;
+
+// ========== FILTERS ROW ==========
 /**
- * @var Nayjest\Grids\Components\FiltersRow $component
- * @var Nayjest\Grids\FieldConfig $column
+ * @var FiltersRow $component
+ * @var FieldConfig $column
  */
 ?>
 <?php if ($grid->getFiltering()->available()) { ?>

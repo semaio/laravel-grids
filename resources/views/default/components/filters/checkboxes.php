@@ -1,5 +1,8 @@
 <?php
-/** @var Nayjest\Grids\Components\SelectFilter $component */
+
+use Nayjest\Grids\Components\SelectFilter;
+
+/** @var SelectFilter $component */
 $value = $component->getValue();
 if (!is_array($value)) {
     $value = [];

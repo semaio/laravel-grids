@@ -1,5 +1,8 @@
 <?php
-/** @var Nayjest\Grids\Components\Filter $component */
+
+use Nayjest\Grids\Components\Filter;
+
+/** @var Filter $component */
 ?>
 <?php if ($component->getLabel()) { ?>
     <span><?= $component->getLabel() ?></span>

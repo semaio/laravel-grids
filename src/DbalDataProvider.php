@@ -7,6 +7,9 @@ namespace Nayjest\Grids;
 use App;
 use ArrayIterator;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Illuminate\Pagination\Factory;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
@@ -74,19 +77,19 @@ class DbalDataProvider extends DataProvider
     }
 
     /**
-     * @return \Illuminate\Pagination\LengthAwarePaginator|\Illuminate\Pagination\Paginator
+     * @return LengthAwarePaginator|Paginator
      */
     public function getPaginator()
     {
         if (!$this->paginator) {
             $items = $this->getCollection()->toArray();
-            $this->paginator = new \Illuminate\Pagination\LengthAwarePaginator(
+            $this->paginator = new LengthAwarePaginator(
                 $items,
                 $this->getTotalRowsCount(),
                 $this->pageSize,
                 $this->getCurrentPage(),
                 [
-                    'path' => \Illuminate\Pagination\Paginator::resolveCurrentPath(),
+                    'path' => Paginator::resolveCurrentPath(),
                 ]
             );
         }
@@ -95,7 +98,7 @@ class DbalDataProvider extends DataProvider
     }
 
     /**
-     * @return \Illuminate\Pagination\Factory
+     * @return Factory
      */
     public function getPaginationFactory()
     {

@@ -87,7 +87,7 @@ class Setup
         }
 
         $blueprint = new Blueprint(self::GRID_CLASS, [
-            new BuildDataProvider(),
+            new BuildDataProvider,
             new CustomInstruction(function (Scaffold $scaffold) {
                 /** @var EloquentDataProvider $provider */
                 $provider = $scaffold->getInput('data_provider');

@@ -1,9 +1,13 @@
 <?php
+
+use Nayjest\Grids\Filter;
+use Nayjest\Grids\SelectFilterConfig;
+
 /**
- * @var Nayjest\Grids\Filter $filter
+ * @var Filter $filter
  */
 /**
- * @var Nayjest\Grids\SelectFilterConfig $cfg
+ * @var SelectFilterConfig $cfg
  */
 $cfg = $filter->getConfig();
 $onchange = '';

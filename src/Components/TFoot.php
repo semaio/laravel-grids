@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Nayjest\Grids\Components;
 
+use Nayjest\Grids\Components\Base\ComponentInterface;
+
 /**
  * Class TFoot
  *
@@ -16,12 +18,12 @@ class TFoot extends HtmlTag
     /**
      * Returns default set of child components.
      *
-     * @return \Nayjest\Grids\Components\Base\ComponentInterface[]
+     * @return ComponentInterface[]
      */
     protected function getDefaultComponents()
     {
         return [
-            (new OneCellRow)->addComponent(new Pager()),
+            (new OneCellRow)->addComponent(new Pager),
         ];
     }
 }

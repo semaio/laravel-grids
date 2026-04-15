@@ -6,6 +6,8 @@ namespace Nayjest\Grids;
 
 use ArrayIterator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\Factory;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
@@ -55,7 +57,7 @@ class EloquentDataProvider extends DataProvider
     }
 
     /**
-     * @return \Illuminate\Pagination\Paginator
+     * @return Paginator
      */
     public function getPaginator()
     {
@@ -67,7 +69,7 @@ class EloquentDataProvider extends DataProvider
     }
 
     /**
-     * @return \Illuminate\Pagination\Factory
+     * @return Factory
      */
     public function getPaginationFactory()
     {

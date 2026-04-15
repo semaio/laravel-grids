@@ -1,5 +1,8 @@
 <?php
-/** @var Nayjest\Grids\Components\Filters\DateRangePicker $component */
+
+use Nayjest\Grids\Components\Filters\DateRangePicker;
+
+/** @var DateRangePicker $component */
 $id = uniqid();
 ?>
 <?php if ($component->getLabel()) { ?>

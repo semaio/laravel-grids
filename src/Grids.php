@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Nayjest\Grids;
 
+use Nayjest\Builder\BlueprintsCollection;
+use Nayjest\Builder\Builder;
 use Nayjest\Builder\Env;
 use Nayjest\Grids\Build\Setup;
 
@@ -19,12 +21,12 @@ class Grids
     /**
      * Returns builder instance.
      *
-     * @return \Nayjest\Builder\Builder
+     * @return Builder
      */
     protected static function getBuilder()
     {
         if (self::$builder === null) {
-            $setup = new Setup();
+            $setup = new Setup;
             self::$builder = $setup->run();
         }
 
@@ -49,7 +51,7 @@ class Grids
      * Returns collection containing
      * blueprints required to construct grids from configuration.
      *
-     * @return \Nayjest\Builder\BlueprintsCollection
+     * @return BlueprintsCollection
      */
     public static function blueprints()
     {

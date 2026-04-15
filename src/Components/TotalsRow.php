@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nayjest\Grids\Components;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 use LogicException;
 use Nayjest\Grids\ArrayDataRow;
@@ -33,11 +34,11 @@ class TotalsRow extends ArrayDataRow implements RenderableComponentInterface
     const OPERATION_AVG = 'avg';
 
     const OPERATION_COUNT = 'count';
-    //const OPERATION_MAX = 'max';
-    //const OPERATION_MIN = 'min';
+    // const OPERATION_MAX = 'max';
+    // const OPERATION_MIN = 'min';
 
     /**
-     * @var \Illuminate\Support\Collection|FieldConfig[]
+     * @var Collection|FieldConfig[]
      */
     protected $fields;
 

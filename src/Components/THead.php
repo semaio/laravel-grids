@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Nayjest\Grids\Components;
 
+use Nayjest\Grids\Components\Base\ComponentInterface;
+
 /**
  * Class THead
  *
@@ -16,7 +18,7 @@ class THead extends HtmlTag
     /**
      * Returns default set of child components.
      *
-     * @return \Nayjest\Grids\Components\Base\ComponentInterface[]
+     * @return ComponentInterface[]
      */
     protected function getDefaultComponents()
     {

@@ -159,7 +159,7 @@ class DateRangePicker extends Filter
      */
     protected function getDefaultJsOptions()
     {
-        $carbon = new Carbon();
+        $carbon = new Carbon;
         $previousMonth = Carbon::now()->startOfMonth()->subWeek();
         $today = Carbon::now();
 

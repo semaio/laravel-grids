@@ -1,5 +1,8 @@
 <?php
-/** @var Nayjest\Grids\Filter $filter */
+
+use Nayjest\Grids\Filter;
+
+/** @var Filter $filter */
 ?>
 <input class="form-control input-sm" name="<?= $filter->getInputName() ?>" value="<?= $filter->getValue() ?>"/>
 <?php if ($label) { ?>

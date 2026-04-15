@@ -1,6 +1,10 @@
 <?php
+
+use Nayjest\Grids\Components\ColumnsHider;
+use Nayjest\Grids\FieldConfig;
+
 /**
- * @var Nayjest\Grids\Components\ColumnsHider $component
+ * @var ColumnsHider $component
  */
 ?>
 <span data-role="columns-hider" id="<?= $component->getId('container') ?>">
@@ -27,7 +31,7 @@
                 </label>
             </li>
             <?php foreach ($columns as $column) {
-                /** @var Nayjest\Grids\FieldConfig $column */
+                /** @var FieldConfig $column */
                 ?>
                 <li>
                 <label>
